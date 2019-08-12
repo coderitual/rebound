@@ -1,2 +1,3 @@
-# js13k-2019
-Entry for js13kGames 2019 competition
+# JS13K-2019-GAME
+
+My entry for the 2019 [js13k](https://js13kgames.com/) competition.
