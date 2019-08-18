@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coderitual/js13k-2019-game.git"
+    "url": "git+https://github.com/coderitual/bounceback.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/coderitual/js13k-2019-game/issues"
+    "url": "https://github.com/coderitual/bounceback/issues"
   },
-  "homepage": "https://github.com/coderitual/js13k-2019-game#readme",
+  "homepage": "https://github.com/coderitual/bounceback#readme",
   "devDependencies": {
-    "parcel": "^1.12.3"
+    "parcel-bundler": "^1.12.3"
   }
 }
