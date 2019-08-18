@@ -4,7 +4,9 @@
   "description": "My entry for the 2019 [js13k](https://js13kgames.com/) competition.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build index.html",
+    "start": "parce index.html"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/coderitual/js13k-2019-game/issues"
   },
-  "homepage": "https://github.com/coderitual/js13k-2019-game#readme"
+  "homepage": "https://github.com/coderitual/js13k-2019-game#readme",
+  "devDependencies": {
+    "parcel": "^1.12.3"
+  }
 }
