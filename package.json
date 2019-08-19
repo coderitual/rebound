@@ -12,7 +12,8 @@
     "inline-build": "html-inline -i ./dist/bundled/index.html -o ./dist/inlined/index.html",
     "build": "npm run delete-dist && npm run create-dist && npm run parcel-build && npm run inline-build",
     "build-zipped": "npm run build && node ./scripts/zip-file.js",
-    "party": "npm run build-zipped && npm run check-file-size"
+    "party": "npm run build-zipped && npm run check-file-size",
+    "deploy": "npm run build && surge --project ./dist/bundled --domain https://bouncebackgame.surge.sh"
   },
   "repository": {
     "type": "git",
@@ -25,13 +26,20 @@
     "url": "https://github.com/coderitual/bounceback/issues"
   },
   "homepage": "https://github.com/coderitual/bounceback#readme",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
   "devDependencies": {
     "archiver": "^3.1.1",
     "chalk": "^2.4.2",
     "cssnano": "^4.1.10",
     "html-inline": "^1.2.0",
+    "husky": "^3.0.4",
     "mkdirp": "^0.5.1",
     "parcel-bundler": "^1.12.3",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.0",
+    "surge": "^0.21.3"
   }
 }
