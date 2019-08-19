@@ -28,7 +28,7 @@
   "homepage": "https://github.com/coderitual/bounceback#readme",
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-push": "npm run deploy"
     }
   },
   "devDependencies": {
