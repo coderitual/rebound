@@ -4,9 +4,15 @@
   "description": "My entry for the 2019 [js13k](https://js13kgames.com/) competition.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build index.html",
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "check-file-size": "node ./scripts/check-file-size.js",
+    "delete-dist": "rimraf ./dist",
+    "create-dist": "mkdirp ./dist/inlined ./dist/zipped",
+    "parcel-build": "parcel build index.html -d ./dist/bundled --no-source-maps",
+    "inline-build": "html-inline -i ./dist/bundled/index.html -o ./dist/inlined/index.html",
+    "build": "npm run delete-dist && npm run create-dist && npm run parcel-build && npm run inline-build",
+    "build-zipped": "npm run build && node ./scripts/zip-file.js",
+    "party": "npm run build-zipped && npm run check-file-size"
   },
   "repository": {
     "type": "git",
@@ -20,6 +26,12 @@
   },
   "homepage": "https://github.com/coderitual/bounceback#readme",
   "devDependencies": {
-    "parcel-bundler": "^1.12.3"
+    "archiver": "^3.1.1",
+    "chalk": "^2.4.2",
+    "cssnano": "^4.1.10",
+    "html-inline": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "parcel-bundler": "^1.12.3",
+    "rimraf": "^3.0.0"
   }
 }
