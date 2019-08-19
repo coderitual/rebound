@@ -31,9 +31,15 @@
         image-rendering: pixelated;
         image-rendering: crisp-edges;
       }
+
+      img {
+        display: none;
+      }
     </style>
   </head>
   <body>
+    <img id="font" src="assets/font.png" />
+    <img id="sprites" src="assets/sprites.png" />
     <canvas id="game" width="128" height="128"></canvas>
     <script src="./src/index.js"></script>
   </body>
