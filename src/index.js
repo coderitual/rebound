@@ -1,4 +1,4 @@
-import { run } from './engine.js';
+import { run } from './engine.js/index.js.js';
 
 const init = () => {};
 const update = () => {};
@@ -19,6 +19,8 @@ const draw = ctx => {
 
   ctx.restore();
   ctx.fillRect(60, 60, 30, 30);
+
+  ctx.print('bounceback 1.0', 10, 10);
 };
 
 run(init, update, draw);

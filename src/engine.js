@@ -1,3 +1,5 @@
+import Font from './font';
+
 export const run = (init = v => v, update = v => v, draw = v => v) => {
   console.log(
     '%c %c %c %c Bounce Back ',
@@ -11,6 +13,11 @@ export const run = (init = v => v, update = v => v, draw = v => v) => {
 
   const ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
+
+  const font = new Font(ctx);
+  ctx.print = (text, x, y, color) => {
+    font.print(text, x, y, color);
+  };
 
   const loop = dt => {
     requestAnimationFrame(loop);

@@ -26,20 +26,15 @@
     "url": "https://github.com/coderitual/bounceback/issues"
   },
   "homepage": "https://github.com/coderitual/bounceback#readme",
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run deploy"
-    }
-  },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "archiver": "^3.1.1",
     "chalk": "^2.4.2",
     "cssnano": "^4.1.10",
     "html-inline": "^1.2.0",
-    "husky": "^3.0.4",
     "mkdirp": "^0.5.1",
     "parcel-bundler": "^1.12.3",
-    "rimraf": "^3.0.0",
-    "surge": "^0.21.3"
+    "rimraf": "^3.0.0"
   }
 }
