@@ -1,4 +1,4 @@
-import { run } from './engine.js/index.js.js';
+import { run } from './engine';
 
 const init = () => {};
 const update = () => {};
