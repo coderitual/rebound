@@ -1,7 +1,11 @@
+import { convertTransparentToAlpha } from './lib';
+
 export default class Font {
   constructor(ctx) {
     this.ctx = ctx;
-    this.img = document.getElementById('font');
+    const fontImg = document.getElementById('font');
+    this.img = convertTransparentToAlpha(fontImg, 0, 0, 0);
+
     const width = 128;
     const height = 85;
 
@@ -23,9 +27,9 @@ export default class Font {
   }
 
   print(text, x, y, fillStyle) {
-    this.ctx.fillStyle = fillStyle;
     Array.from(text).forEach((char, i) => {
       const [sx, sy] = this.posFromIndex(char.charCodeAt(0));
+
       this.ctx.drawImage(
         this.img,
         sx,
@@ -36,7 +40,6 @@ export default class Font {
         y,
         this.size,
         this.size,
-        fillStyle,
       );
     });
   }
