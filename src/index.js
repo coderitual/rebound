@@ -28,4 +28,10 @@ const draw = ctx => {
   ctx.print('bounceback 1.0', 40, 40, 'red');
 };
 
-run(init, update, draw);
+window.addEventListener(
+  'load',
+  () => {
+    run(init, update, draw);
+  },
+  false,
+);
