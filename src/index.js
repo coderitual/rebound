@@ -3,24 +3,25 @@ import { run } from './engine';
 const init = () => {};
 const update = () => {};
 const draw = ctx => {
-  ctx.fillRect(0, 0, 128, 128);
+  ctx.globalCompositeOperation = 'source-over';
   ctx.save();
+  ctx.clearRect(0, 0, 128, 128);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(1, 1);
 
   ctx.fillStyle = '#09F';
-  ctx.fillRect(15, 15, 120, 120);
+  ctx.fillRect(30, 30, 30, 30);
 
-  ctx.save();
-  ctx.fillStyle = '#FFF';
-  ctx.globalAlpha = 0.5;
-  ctx.fillRect(30, 30, 90, 90);
+  ctx.print('bounceback 1.0', 40, 40, 'red');
 
-  ctx.restore();
-  ctx.fillRect(45, 45, 60, 60);
+  // set composite mode
+  this.ctx.globalCompositeOperation = 'source-in';
 
-  ctx.restore();
-  ctx.fillRect(60, 60, 30, 30);
+  this.ctx.fillStyle = fillColor;
+  this.ctx.fillRect(0, 0, this.width, this.height);
 
-  ctx.print('bounceback 1.0', 10, 10);
+  // fill background in canvas itself
+  this.ctx.globalCompositeOperation = 'destination-over';
 };
 
 run(init, update, draw);

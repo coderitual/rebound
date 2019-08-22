@@ -23,13 +23,7 @@ export default class Font {
   }
 
   print(text, x, y, fillStyle) {
-    // set composite mode
-    // this.ctx.globalCompositeOperation = 'source-in';
-
     this.ctx.fillStyle = fillStyle;
-
-    // fill background in canvas itself
-    //this.ctx.globalCompositeOperation = 'destination-over';
 
     text.split('').forEach((char, i) => {
       const [sx, sy] = this.posFromIndex(char.charCodeAt(0));
