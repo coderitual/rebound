@@ -24,8 +24,7 @@ export default class Font {
 
   print(text, x, y, fillStyle) {
     this.ctx.fillStyle = fillStyle;
-
-    text.split('').forEach((char, i) => {
+    Array.from(text).forEach((char, i) => {
       const [sx, sy] = this.posFromIndex(char.charCodeAt(0));
       this.ctx.drawImage(
         this.img,
