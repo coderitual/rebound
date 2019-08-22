@@ -6,8 +6,8 @@ export default class Font {
     const height = 85;
 
     this.size = 8;
-    this.vGap = 3;
-    this.hGap = 3;
+    this.kerning = 5;
+    this.letterSpacing = 1;
 
     this.columns = Math.floor(width / this.size);
     this.rows = Math.floor(height / this.size);
@@ -33,7 +33,7 @@ export default class Font {
         sy,
         this.size,
         this.size,
-        x + i * (this.size - this.hGap),
+        x + i * (this.size - this.kerning + this.letterSpacing),
         y,
         this.size,
         this.size,
