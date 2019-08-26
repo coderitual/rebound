@@ -1,5 +1,5 @@
 import Game from './Game';
-import Process from '../lib/Process';
+import Process from '/lib/Process';
 
 window.addEventListener(
   'load',

@@ -1,5 +1,5 @@
-import Process from '../lib/Process';
-import Font from '../lib/Font';
+import Process from '/lib/Process';
+import Font from '/lib/Font';
 
 export default class Game extends Process {
   x = 10;
