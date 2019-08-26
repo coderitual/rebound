@@ -20,12 +20,6 @@ export default class Game extends Process {
     this.canvas = document.getElementById('game');
     this.ctx = this.canvas.getContext('2d');
     this.font = new Font(this.ctx);
-
-    this.ctx.imageSmoothingEnabled = false;
-
-    this.ctx.print = (text, x, y, color) => {
-      this.font.print(text, x, y, color);
-    };
   }
 
   update(dt) {
@@ -47,6 +41,6 @@ export default class Game extends Process {
     this.ctx.fillStyle = '#09F';
     this.ctx.fillRect(this.x, this.y, 30, 30);
 
-    this.ctx.print('bounceback 1.0', 40, 40, 'red');
+    this.font.print('bounceback 1.0', 40, 40, 'red');
   }
 }
