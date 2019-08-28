@@ -1,5 +1,5 @@
-import { process, start } from '/lib/Process';
-import font from '/lib/Font';
+import { process, start } from '/lib/process';
+import font from '/lib/font';
 
 let x = 10;
 let y = 40;
