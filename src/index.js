@@ -1,11 +1,3 @@
-import Game from './Game';
-import Process from '/lib/Process';
+import { init } from './Game';
 
-window.addEventListener(
-  'load',
-  () => {
-    new Game();
-    Process.start();
-  },
-  false,
-);
+window.addEventListener('load', init, false);
