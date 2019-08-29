@@ -1,5 +1,6 @@
 import { process, start } from '/lib/process';
 import font from '/lib/font';
+import spritesheet from '/lib/spritesheet';
 
 let x = 10;
 let y = 40;
@@ -20,6 +21,8 @@ export function init() {
 
   canvas = document.getElementById('game');
   ctx = canvas.getContext('2d');
+
+  spritesheet.define('hero', 0, 0, 8, 8);
 
   process(update, render);
   start();
@@ -43,6 +46,8 @@ function render() {
 
   ctx.fillStyle = '#09F';
   ctx.fillRect(x, y, 30, 30);
+
+  spritesheet.draw(ctx, 'hero', x, y);
 
   font.print(ctx, 'bounceback 1.0', 40, 40, 'red');
 }
