@@ -3,7 +3,7 @@
 
 My entry for the 2019 [js13k](https://js13kgames.com/) competition.
 
-Play here: [bounceback](https://bouncebackgame.netlify.com/)
+Play here: [rebound](https://bouncebackgame.netlify.com/)
 
 ## License
 
