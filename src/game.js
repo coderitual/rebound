@@ -1,6 +1,7 @@
 import { process, start } from '/lib/process';
 import font from '/lib/font';
 import spritesheet from '/lib/spritesheet';
+import map from '/lib/map';
 
 let x = 10;
 let y = 40;
@@ -43,6 +44,8 @@ function render() {
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, 128, 128);
+
+  map.draw(ctx);
 
   ctx.fillStyle = '#09F';
   ctx.fillRect(x, y, 30, 30);
