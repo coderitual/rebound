@@ -49,5 +49,5 @@ function render() {
 
   spritesheet.draw(ctx, 'hero', x, y);
 
-  font.print(ctx, 'bounceback 1.0', 40, 40, 'red');
+  font.print(ctx, 'rebound 1.0', 40, 40, 'red');
 }
