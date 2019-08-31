@@ -36,8 +36,8 @@ export function init() {
 function update(dt) {
   x += dx;
   y += dy;
-  if (x + 30 === vw || x === 0) dx = -dx;
-  if (y + 30 === vh || y === 0) dy = -dy;
+  if (x + 8 === vw || x === 0) dx = -dx;
+  if (y + 8 === vh || y === 0) dy = -dy;
 }
 
 function render() {
@@ -50,9 +50,6 @@ function render() {
   ctx.fillRect(0, 0, vw, vh);
 
   map.draw(ctx);
-
-  ctx.fillStyle = '#09F';
-  ctx.fillRect(x, y, 30, 30);
 
   spritesheet.draw(ctx, 'hero', x, y);
 
