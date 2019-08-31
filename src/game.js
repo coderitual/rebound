@@ -3,6 +3,8 @@ import font from '/lib/font';
 import spritesheet from '/lib/spritesheet';
 import map from '/lib/map';
 
+let vw = 0;
+let vh = 0;
 let x = 10;
 let y = 40;
 let dx = 1;
@@ -21,6 +23,8 @@ export function init() {
   );
 
   canvas = document.getElementById('game');
+  vw = canvas.width;
+  vh = canvas.height;
   ctx = canvas.getContext('2d');
 
   spritesheet.define('hero', 0, 0, 8, 8);
@@ -32,18 +36,18 @@ export function init() {
 function update(dt) {
   x += dx;
   y += dy;
-  if (x + 30 === 128 || x === 0) dx = -dx;
-  if (y + 30 === 128 || y === 0) dy = -dy;
+  if (x + 30 === vw || x === 0) dx = -dx;
+  if (y + 30 === vh || y === 0) dy = -dy;
 }
 
 function render() {
   ctx.globalCompositeOperation = 'source-over';
-  ctx.clearRect(0, 0, 128, 128);
+  ctx.clearRect(0, 0, vw, vh);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(1, 1);
 
   ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, 128, 128);
+  ctx.fillRect(0, 0, vw, vh);
 
   map.draw(ctx);
 
@@ -52,5 +56,5 @@ function render() {
 
   spritesheet.draw(ctx, 'hero', x, y);
 
-  font.print(ctx, 'rebound 1.0', 40, 40, 'red');
+  font.printOutline(ctx, 'rebound 1.0', 40, 40, 'white', 'black');
 }
