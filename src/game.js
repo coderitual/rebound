@@ -28,6 +28,7 @@ export function init() {
   ctx = canvas.getContext('2d');
 
   spritesheet.define('hero', 0, 0, 8, 8);
+  spritesheet.define('title', 0, 8, 56, 16);
 
   process(update, render);
   start();
@@ -53,5 +54,13 @@ function render() {
 
   spritesheet.draw(ctx, 'hero', x, y);
 
-  font.printOutline(ctx, 'rebound 1.0', 40, 40, 'white', 'black');
+  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
+  font.printOutline(
+    ctx,
+    'compo edition',
+    (128 - 'compo edition'.length * 4) / 2,
+    70,
+    'white',
+    'black',
+  );
 }
