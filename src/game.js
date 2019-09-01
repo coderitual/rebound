@@ -49,12 +49,12 @@ function update(dt) {
 function render() {
   cls(ctx);
 
-  camera(-20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
+  camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
 
-  map.draw(ctx);
+  map(ctx);
   spritesheet.draw(ctx, 'hero', x, y);
 
-  camera();
+  camera(ctx);
   spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
   font.printOutline(
     ctx,
