@@ -1,0 +1,157 @@
+{ "columns":16,
+ "image":"sprites.png",
+ "imageheight":128,
+ "imagewidth":128,
+ "margin":0,
+ "name":"sprites",
+ "spacing":0,
+ "terrains":[
+        {
+         "name":"New Terrain",
+         "tile":49
+        }, 
+        {
+         "name":"New Terrain",
+         "tile":49
+        }],
+ "tilecount":256,
+ "tiledversion":"2019.08.14",
+ "tileheight":8,
+ "tiles":[
+        {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":0
+                }, 
+                {
+                 "duration":100,
+                 "tileid":1
+                }],
+         "id":0
+        }, 
+        {
+         "id":81,
+         "terrain":[-1, -1, -1, 1]
+        }, 
+        {
+         "id":82,
+         "terrain":[-1, -1, 1, 1]
+        }, 
+        {
+         "id":83,
+         "terrain":[-1, -1, 1, -1]
+        }, 
+        {
+         "id":97,
+         "terrain":[-1, 1, -1, 1]
+        }, 
+        {
+         "id":98,
+         "terrain":[1, 1, 1, 1]
+        }, 
+        {
+         "id":99,
+         "terrain":[1, -1, 1, -1]
+        }, 
+        {
+         "id":102,
+         "terrain":[1, 1, 1, -1]
+        }, 
+        {
+         "id":103,
+         "terrain":[1, 1, -1, 1]
+        }, 
+        {
+         "id":113,
+         "terrain":[-1, 1, -1, -1]
+        }, 
+        {
+         "id":114,
+         "terrain":[1, 1, -1, -1]
+        }, 
+        {
+         "id":115,
+         "terrain":[1, -1, -1, -1]
+        }, 
+        {
+         "id":118,
+         "terrain":[1, -1, 1, 1]
+        }, 
+        {
+         "id":119,
+         "terrain":[-1, 1, 1, 1]
+        }, 
+        {
+         "id":161,
+         "terrain":[-1, -1, -1, 0]
+        }, 
+        {
+         "id":162,
+         "terrain":[-1, -1, 0, 0]
+        }, 
+        {
+         "id":163,
+         "terrain":[-1, -1, 0, -1]
+        }, 
+        {
+         "id":164,
+         "terrain":[0, 0, 0, -1]
+        }, 
+        {
+         "id":165,
+         "terrain":[0, 0, -1, 0]
+        }, 
+        {
+         "id":177,
+         "terrain":[-1, 0, -1, 0]
+        }, 
+        {
+         "id":178,
+         "terrain":[0, 0, 0, 0]
+        }, 
+        {
+         "id":179,
+         "terrain":[0, -1, 0, -1]
+        }, 
+        {
+         "id":180,
+         "terrain":[0, -1, 0, 0]
+        }, 
+        {
+         "id":181,
+         "terrain":[-1, 0, 0, 0]
+        }, 
+        {
+         "id":193,
+         "terrain":[-1, 0, -1, -1]
+        }, 
+        {
+         "id":194,
+         "terrain":[0, 0, -1, -1]
+        }, 
+        {
+         "id":195,
+         "terrain":[0, -1, -1, -1]
+        }, 
+        {
+         "id":196,
+         "terrain":[0, -1, -1, 0]
+        }, 
+        {
+         "id":197,
+         "terrain":[-1, 0, 0, -1]
+        }],
+ "tilewidth":8,
+ "transparentcolor":"#000000",
+ "type":"tileset",
+ "version":1.2,
+ "wangsets":[
+        {
+         "cornercolors":[],
+         "edgecolors":[],
+         "name":"New Wang Set",
+         "tile":-1,
+         "wangtiles":[]
+        }]
+}
