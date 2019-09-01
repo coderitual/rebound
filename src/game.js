@@ -12,6 +12,8 @@ let y = 40;
 let dx = 1;
 let dy = 1;
 
+let time = 1;
+
 let canvas;
 let ctx;
 
@@ -28,6 +30,7 @@ export function init() {
   vw = canvas.width;
   vh = canvas.height;
   ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
 
   spritesheet.define('hero', 0, 0, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
@@ -46,13 +49,12 @@ function update(dt) {
 function render() {
   cls(ctx);
 
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, vw, vh);
+  camera(-20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
 
   map.draw(ctx);
-
   spritesheet.draw(ctx, 'hero', x, y);
 
+  camera();
   spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
   font.printOutline(
     ctx,
