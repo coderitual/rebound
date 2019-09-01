@@ -2,6 +2,8 @@ import { process, start } from '/lib/process';
 import font from '/lib/font';
 import spritesheet from '/lib/spritesheet';
 import map from '/lib/map';
+import camera from '/lib/camera';
+import cls from '/lib/cls';
 
 let vw = 0;
 let vh = 0;
@@ -42,10 +44,7 @@ function update(dt) {
 }
 
 function render() {
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.clearRect(0, 0, vw, vh);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.scale(1, 1);
+  cls(ctx);
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, vw, vh);
