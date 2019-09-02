@@ -21,6 +21,21 @@ let ctx;
 
 const cd = cooldown();
 
+let offset = 0;
+export function shake(ctx) {
+  let fade = 0.95;
+  let offsetx = 16 - Math.random() * 32;
+  let offsety = 16 - Math.random() * 32;
+  offsetx *= offset;
+  offsety *= offset;
+
+  camera(ctx, offsetx, offsety);
+  offset *= fade;
+  if (offset < 0.05) {
+    offset = 0;
+  }
+}
+
 export function init() {
   console.log(
     '%c %c %c %c REBOUND ',
@@ -46,6 +61,7 @@ export function init() {
 function update(dt) {
   if (!cd.hasSet('explosion', 2)) {
     fx.explode(64, 64, 5, 100);
+    offset = 0.3;
   }
 
   x += dx;
@@ -62,7 +78,7 @@ function render() {
   map(ctx);
   spritesheet.draw(ctx, 'hero', x, y);
 
-  camera(ctx);
+  shake(ctx);
   fx.draw(ctx);
   spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
   font.printOutline(
