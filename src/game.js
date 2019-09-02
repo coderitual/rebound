@@ -1,9 +1,10 @@
-import { process, start } from '/lib/process';
+import process, { start } from '/lib/process';
 import font from '/lib/font';
 import spritesheet from '/lib/spritesheet';
 import map from '/lib/map';
 import camera from '/lib/camera';
 import cls from '/lib/cls';
+import cooldown from '/lib/cooldown';
 import fx from './fx';
 
 let vw = 0;
@@ -18,9 +19,11 @@ let time = 1;
 let canvas;
 let ctx;
 
+const cd = cooldown();
+
 export function init() {
   console.log(
-    '%c %c %c %c Bounce Back ',
+    '%c %c %c %c REBOUND ',
     'background: #666;',
     'background: #555;',
     'background: #444;',
@@ -38,10 +41,13 @@ export function init() {
 
   process(update, render);
   start();
-  fx.explode(64, 64, 5, 50);
 }
 
 function update(dt) {
+  if (!cd.hasSet('explosion', 2)) {
+    fx.explode(64, 64, 5, 100);
+  }
+
   x += dx;
   y += dy;
   if (x + 8 === vw || x === 0) dx = -dx;
