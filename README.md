@@ -1,5 +1,5 @@
 # REBOUND
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c52bc956-6ab2-4fa3-bb41-4fe16d197fad/deploy-status)](https://app.netlify.com/sites/bouncebackgame/deploys)
 
@@ -20,6 +20,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://www.coderitual.com"><img src="https://avatars0.githubusercontent.com/u/8572321?v=4" width="100px;" alt="Mike Skowronek"/><br /><sub><b>Mike Skowronek</b></sub></a><br /><a href="https://github.com/coderitual/rebound/commits?author=coderitual" title="Code">💻</a></td>
+    <td align="center"><a href="http://michal.dev"><img src="https://avatars0.githubusercontent.com/u/117785?v=4" width="100px;" alt="Michal Kulinski"/><br /><sub><b>Michal Kulinski</b></sub></a><br /><a href="https://github.com/coderitual/rebound/commits?author=michax" title="Code">💻</a></td>
   </tr>
 </table>
 
