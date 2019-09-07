@@ -99,7 +99,7 @@ function update(dt) {
 function render() {
   cls(ctx);
 
-  //camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);  
+  camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);  
   map(ctx);  
   spritesheet.draw(ctx, 'hero', x, y);    
   agent.draw(ctx);
