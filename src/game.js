@@ -7,7 +7,7 @@ import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
 import agent from './agent';
-import debug from '/lib/debug';
+import draw from '/lib/draw';
 import input from '/lib/input';
 
 window.$globalConfig = {
@@ -100,11 +100,13 @@ function render() {
   cls(ctx);
 
   camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);  
-  map(ctx);  
-  spritesheet.draw(ctx, 'hero', x, y);    
+  map(ctx);
+  spritesheet.draw(ctx, 'hero', x, y);
   agent.draw(ctx);
   
-  debug.drawGrid(ctx);
+  if ($globalConfig.isDebugDraw) {
+    draw.grid(ctx);
+  }
 
   shake(ctx);
   fx.draw(ctx);  
