@@ -35,5 +35,8 @@
     "mkdirp": "^0.5.1",
     "parcel-bundler": "^1.12.3",
     "rimraf": "^3.0.0"
+  },
+  "dependencies": {
+    "lib": "^4.0.5"
   }
 }
