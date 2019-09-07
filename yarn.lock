@@ -3182,6 +3182,11 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lib@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/lib/-/lib-4.0.5.tgz#3564dfb630819ad3eb73643abd535d73e2cbde91"
+  integrity sha512-tDg4tRypj1SxDVUN24UIGjPcrs0ct/3Lv6uuOcDrStzwThvb6P/UbyJh/UM+jBZtTXzHTBUpf4deWTcu6Ya5xA==
+
 lodash.clone@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"

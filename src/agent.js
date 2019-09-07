@@ -1,3 +1,5 @@
+import spritesheet from "/lib/spritesheet";
+
 /**
  * Entity that implements basic physics and movement characteristics.
  *  - Colison
@@ -37,17 +39,40 @@ const FLAG_AVOIDANCE = 2;
 // Forces enabled. Agent reacts to outside forces
 const FLAG_FORCES = 4;
 
+// Enables debug drawing using red circle.
+const FLAG_DEBUG = 8;
+
 const FLAG_ALL = FLAG_COLLISION | FLAG_AVOIDANCE | FLAG_FORCES;
 
-function add({ x, y, velocity, sprite, state = STATE_IDLE, flag = FLAG_ALL }) {
-  agents.add({
-    x,
-    y,
-    velocity,
-    state,
-    flag,
-    sprite
-  });
+/**
+ * CONSTANT: SHAPES
+ * Used for collision detection.
+ */
+
+const SHAPE_CIRLCE = 1;
+
+const SHAPE_SQUARE = 2;
+
+/**
+ * CONSTANTS: DEBUG PROPS
+ */
+
+const DEBUG_RADIUS = 2;
+
+const DEBUG_COLOR = "#FF0000";
+
+function add({
+  x,
+  y,
+  velocity,
+  sprite,
+  state = STATE_IDLE,
+  flag = FLAG_ALL,
+  shape = SHAPE_CIRLCE,
+  width,
+  height
+}) {
+  agents.add(...arguments);
 }
 
 function remove(agent) {
@@ -56,4 +81,23 @@ function remove(agent) {
 
 function update(dt) {}
 
-function draw(ctx) {}
+function draw(ctx) {  
+  for (let a of agents) {
+    if ($globalConfig.isDebugDraw) {
+      const height = a.height || a.width;
+      ctx.beginPath();
+      ctx.rect(a.x, a.y, a.width, height);
+      ctx.fillStyle = DEBUG_COLOR;
+      ctx.fill();
+    } else {
+      spritesheet.draw(ctx, a.sprite, a.x, a.y);         
+    }
+  }
+}
+
+export default {
+  update,
+  draw,
+  add,
+  FLAG_DEBUG,
+};
