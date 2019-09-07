@@ -15,7 +15,7 @@ window.$globalConfig = {
   isDebugDraw: false,
   // Print each keystroke
   isDebugInput: false,
-}
+};
 
 let vw = 0;
 let vh = 0;
@@ -52,7 +52,7 @@ export function init() {
     'background: #666;',
     'background: #555;',
     'background: #444;',
-    'background: #000; color: #fff',
+    'background: #000; color: #fff'
   );
 
   canvas = document.getElementById('game');
@@ -99,25 +99,31 @@ function update(dt) {
 function render() {
   cls(ctx);
 
-  camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);  
+  camera(
+    ctx,
+    -20,
+    -20,
+    Math.cos(time++ / 200) * 10,
+    Math.cos(time++ / 200) + 2
+  );
   map(ctx);
   spritesheet.draw(ctx, 'hero', x, y);
   agent.draw(ctx);
-  
+
   if ($globalConfig.isDebugDraw) {
     draw.grid(ctx);
   }
 
   shake(ctx);
-  fx.draw(ctx);  
-  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);  
+  fx.draw(ctx);
+  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
   font.printOutline(
     ctx,
     'compo edition',
     (128 - 'compo edition'.length * 4) / 2,
     70,
     'white',
-    'black',
+    'black'
   );
 
   input.clear();
