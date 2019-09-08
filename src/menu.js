@@ -1,5 +1,5 @@
-function update(delta) {}
-
-function render(ctx) {}
-
-export { update, render };
+export default {
+  load() {},
+  update() {},
+  render(ctx) {},
+};
