@@ -6,15 +6,29 @@ import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
-import agent from './agent';
-import debug from '/lib/debug';
+import shape from '/lib/shape';
 import input from '/lib/input';
+import base from './base';
 
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
   isDebugDraw: false,
   // Print each keystroke
-  isDebugInput: false,
+  isDebugInput: true,
+
+  // TODO: Add button mapping for keys
+  playerInput: {
+    0: {
+      moveUpKey: 'ArrowUp',
+      moveDownKey: 'ArrowDown',
+      powerKey: 'ControlRight',
+    },
+    1: {
+      moveUpKey: 'KeyW',
+      moveDownKey: 'KeyS',
+      powerKey: 'Space',
+    },
+  },
 };
 
 let vw = 0;
@@ -61,22 +75,37 @@ export function init() {
   ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
 
-  input.init({ isDebug: true });
+  input.init();
+  base.init();
 
-  spritesheet.define('hero', 0, 3 * 8, 8, 8);
+  spritesheet.define('hero', 0, 3 * 8, 4, 4);
   spritesheet.define('title', 0, 8, 56, 16);
 
-  agent.add({
-    x: 0,
-    y: 0,
-    width: 4,
-    height: 4,
-    sprite: 'hero',
+  base.add({
+    playerId: 0,
+    x: 110,
+    y: 64 - 5,
+    angle: 90,
+    targetAngle: 180,
+    power: 1,
+    targetPower: 0,
+  });
+
+  base.add({
+    playerId: 1,
+    x: 4,
+    y: 64 - 5,
+    angle: -90,
+    targetAngle: 0,
+    power: 1,
+    targetPower: 0,
   });
 
   process(update, render);
   start();
 }
+
+let showLogo = true;
 
 function update(dt) {
   if (!cd.hasSet('explosion', 2)) {
@@ -84,16 +113,21 @@ function update(dt) {
     offset = 0.3;
   }
 
+  /*
   x += dx;
   y += dy;
   if (x + 8 === vw || x === 0) dx = -dx;
   if (y + 8 === vh || y === 0) dy = -dy;
+  */
 
   if (input.isDownOnce('KeyD')) {
     $globalConfig.isDebugDraw = !$globalConfig.isDebugDraw;
   }
 
+  base.update();
   fx.update();
+
+  time += dt;
 }
 
 function render() {
@@ -101,22 +135,25 @@ function render() {
 
   // camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
   map(ctx);
-  spritesheet.draw(ctx, 'hero', x, y);
-  agent.draw(ctx);
+  // spritesheet.draw(ctx, 'hero', x, y);
+  shape.drawGrid(ctx);
+  base.draw(ctx);
 
-  debug.drawGrid(ctx);
+  // shake(ctx);
+  // fx.draw(ctx);
 
-  shake(ctx);
-  fx.draw(ctx);
-  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-  font.printOutline(
-    ctx,
-    'compo edition',
-    (128 - 'compo edition'.length * 4) / 2,
-    70,
-    'white',
-    'black'
-  );
+  if (time < 2.5) {
+    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
+
+    font.printOutline(
+      ctx,
+      'compo edition',
+      (128 - 'compo edition'.length * 4) / 2,
+      70,
+      'white',
+      'black'
+    );
+  }
 
   input.clear();
 }
