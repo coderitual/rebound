@@ -13,7 +13,8 @@
     "build": "npm run delete-dist && npm run create-dist && npm run parcel-build && npm run inline-build",
     "build-zipped": "npm run build && node ./scripts/zip-file.js",
     "party": "npm run build-zipped && npm run check-file-size",
-    "deploy": "npm run build && surge --project ./dist/bundled --domain https://bouncebackgame.surge.sh"
+    "deploy": "npm run build && surge --project ./dist/bundled --domain https://bouncebackgame.surge.sh",
+    "lint": "prettier --write \"{src,lib}/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "html-inline": "^1.2.0",
     "mkdirp": "^0.5.1",
     "parcel-bundler": "^1.12.3",
+    "prettier": "^1.18.2",
     "rimraf": "^3.0.0"
   },
   "dependencies": {

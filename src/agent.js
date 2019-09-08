@@ -1,4 +1,4 @@
-import spritesheet from "/lib/spritesheet";
+import spritesheet from '/lib/spritesheet';
 
 /**
  * Entity that implements basic physics and movement characteristics.
@@ -59,7 +59,7 @@ const SHAPE_SQUARE = 2;
 
 const DEBUG_RADIUS = 2;
 
-const DEBUG_COLOR = "#FF0000";
+const DEBUG_COLOR = '#FF0000';
 
 function add({
   x,
@@ -70,7 +70,7 @@ function add({
   flag = FLAG_ALL,
   shape = SHAPE_CIRLCE,
   width,
-  height
+  height,
 }) {
   agents.add(...arguments);
 }
@@ -81,7 +81,7 @@ function remove(agent) {
 
 function update(dt) {}
 
-function draw(ctx) {  
+function draw(ctx) {
   for (let a of agents) {
     if ($globalConfig.isDebugDraw) {
       const height = a.height || a.width;
@@ -90,7 +90,7 @@ function draw(ctx) {
       ctx.fillStyle = DEBUG_COLOR;
       ctx.fill();
     } else {
-      spritesheet.draw(ctx, a.sprite, a.x, a.y);         
+      spritesheet.draw(ctx, a.sprite, a.x, a.y);
     }
   }
 }
