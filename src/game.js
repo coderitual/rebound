@@ -12,12 +12,12 @@ import input from '/lib/input';
 import menu from './menu';
 
 const scenes = {
-  MENU: Symbol('menu'),
-  LEVEL: Symbol('level'),
+  menu,
+  level: { update: () => {}, render: () => {} },
 };
 
 const state = {
-  scene: scenes.MENU,
+  scene: scenes.menu,
 };
 
 window.$globalConfig = {
