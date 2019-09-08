@@ -5,60 +5,22 @@ import map from '/lib/map';
 import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
-import fx from './fx';
-import shape from '/lib/shape';
 import input from '/lib/input';
-import base from './base';
+import scene from './scene';
+import menu from './menu';
+import level from './level';
 
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
   isDebugDraw: false,
   // Print each keystroke
-  isDebugInput: true,
-
-  // TODO: Add button mapping for keys
-  playerInput: {
-    0: {
-      moveUpKey: 'ArrowUp',
-      moveDownKey: 'ArrowDown',
-      powerKey: 'ControlRight',
-    },
-    1: {
-      moveUpKey: 'KeyW',
-      moveDownKey: 'KeyS',
-      powerKey: 'Space',
-    },
-  },
+  isDebugInput: false,
 };
-
-let vw = 0;
-let vh = 0;
-let x = 10;
-let y = 40;
-let dx = 1;
-let dy = 1;
-
-let time = 1;
 
 let canvas;
 let ctx;
-
-const cd = cooldown();
-
-let offset = 0;
-export function shake(ctx) {
-  let fade = 0.95;
-  let offsetx = 16 - Math.random() * 32;
-  let offsety = 16 - Math.random() * 32;
-  offsetx *= offset;
-  offsety *= offset;
-
-  camera(ctx, offsetx, offsety);
-  offset *= fade;
-  if (offset < 0.05) {
-    offset = 0;
-  }
-}
+let vw;
+let vh;
 
 export function init() {
   console.log(
@@ -66,7 +28,7 @@ export function init() {
     'background: #666;',
     'background: #555;',
     'background: #444;',
-    'background: #000; color: #fff'
+    'background: #000; color: #fff',
   );
 
   canvas = document.getElementById('game');
@@ -75,85 +37,28 @@ export function init() {
   ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
 
-  input.init();
-  base.init();
+  input.init({ isDebug: true });
 
-  spritesheet.define('hero', 0, 3 * 8, 4, 4);
+  spritesheet.define('hero', 0, 3 * 8, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
 
-  base.add({
-    playerId: 0,
-    x: 110,
-    y: 64 - 5,
-    angle: 90,
-    targetAngle: 180,
-    power: 1,
-    targetPower: 0,
-  });
-
-  base.add({
-    playerId: 1,
-    x: 4,
-    y: 64 - 5,
-    angle: -90,
-    targetAngle: 0,
-    power: 1,
-    targetPower: 0,
-  });
+  scene.add('menu', menu);
+  scene.add('level', level);
+  scene.load('menu');
 
   process(update, render);
   start();
 }
 
-let showLogo = true;
-
 function update(dt) {
-  if (!cd.hasSet('explosion', 2)) {
-    fx.explode(64, 64, 5, 100);
-    offset = 0.3;
-  }
-
-  /*
-  x += dx;
-  y += dy;
-  if (x + 8 === vw || x === 0) dx = -dx;
-  if (y + 8 === vh || y === 0) dy = -dy;
-  */
+  scene.update(dt);
 
   if (input.isDownOnce('KeyD')) {
     $globalConfig.isDebugDraw = !$globalConfig.isDebugDraw;
   }
-
-  base.update();
-  fx.update();
-
-  time += dt;
 }
 
 function render() {
   cls(ctx);
-
-  // camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
-  map(ctx);
-  // spritesheet.draw(ctx, 'hero', x, y);
-  shape.drawGrid(ctx);
-  base.draw(ctx);
-
-  // shake(ctx);
-  // fx.draw(ctx);
-
-  if (time < 2.5) {
-    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-
-    font.printOutline(
-      ctx,
-      'compo edition',
-      (128 - 'compo edition'.length * 4) / 2,
-      70,
-      'white',
-      'black'
-    );
-  }
-
-  input.clear();
+  scene.render(ctx);
 }
