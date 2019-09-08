@@ -5,16 +5,10 @@ import map from '/lib/map';
 import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
-import fx from './fx';
-import agent from './agent';
-import debug from '/lib/debug';
 import input from '/lib/input';
 import scene from './scene';
 import menu from './menu';
 import level from './level';
-
-scene.add('menu', menu);
-scene.add('level', level);
 
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
@@ -48,6 +42,8 @@ export function init() {
   spritesheet.define('hero', 0, 3 * 8, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
 
+  scene.add('menu', menu);
+  scene.add('level', level);
   scene.load('menu');
 
   process(update, render);

@@ -1,9 +1,9 @@
 const scenes = new Map();
-const defult = { load: () => {}, render: () => {}, update: () => {} };
-let active = defult;
+const empty = { load: () => {}, render: () => {}, update: () => {} };
+let active = empty;
 
 function add(name, scene) {
-  scenes.set(name, { ...defult, ...scene });
+  scenes.set(name, { ...empty, ...scene });
 }
 
 function load(name) {
