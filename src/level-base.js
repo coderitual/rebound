@@ -5,9 +5,9 @@ import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
-import agent from './agent';
 import shape from '/lib/shape';
 import input from '/lib/input';
+import base from './base';
 
 let time = 1;
 const cd = cooldown();
@@ -28,50 +28,53 @@ export function shake(ctx) {
 }
 
 function load() {
-  agent.add({
-    x: 0,
-    y: 0,
-    width: 4,
-    height: 4,
-    sprite: 'hero',
+  input.init();
+  base.init();
+
+  base.add({
+    playerId: 0,
+    x: 110,
+    y: 64 - 5,
+    angle: 90,
+    targetAngle: 180,
+    power: 1,
+    targetPower: 0,
+  });
+
+  base.add({
+    playerId: 1,
+    x: 4,
+    y: 64 - 5,
+    angle: -90,
+    targetAngle: 0,
+    power: 1,
+    targetPower: 0,
   });
 }
 
 function update(dt) {
-  if (!cd.hasSet('explosion', 2)) {
-    fx.explode(64, 64, 5, 100);
-    offset = 0.3;
-  }
-
+  base.update(dt);
   fx.update();
+  time += dt;
 }
 
 function render(ctx) {
   cls(ctx);
-
-  camera(
-    ctx,
-    -20,
-    -20,
-    Math.cos(time++ / 200) * 10,
-    Math.cos(time++ / 200) + 2
-  );
   map(ctx);
-  agent.draw(ctx);
-
+  base.draw(ctx);
   shape.drawGrid(ctx);
 
-  shake(ctx);
-  fx.draw(ctx);
-  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-  font.printOutline(
-    ctx,
-    'compo edition',
-    (128 - 'compo edition'.length * 4) / 2,
-    70,
-    'white',
-    'black'
-  );
+  if (time < 2.5) {
+    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
+    font.printOutline(
+      ctx,
+      'compo edition',
+      (128 - 'compo edition'.length * 4) / 2,
+      70,
+      'white',
+      'black'
+    );
+  }
 }
 
 export default { load, update, render };

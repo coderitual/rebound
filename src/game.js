@@ -9,12 +9,28 @@ import input from '/lib/input';
 import scene from './scene';
 import menu from './menu';
 import level from './level';
+import levelBase from './level-base';
 
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
   isDebugDraw: false,
+
   // Print each keystroke
   isDebugInput: false,
+
+  // TODO: Add button mapping for keys
+  playerInput: {
+    0: {
+      moveUpKey: 'ArrowUp',
+      moveDownKey: 'ArrowDown',
+      powerKey: 'ControlRight',
+    },
+    1: {
+      moveUpKey: 'KeyW',
+      moveDownKey: 'KeyS',
+      powerKey: 'Space',
+    },
+  },
 };
 
 let canvas;
@@ -28,7 +44,7 @@ export function init() {
     'background: #666;',
     'background: #555;',
     'background: #444;',
-    'background: #000; color: #fff',
+    'background: #000; color: #fff'
   );
 
   canvas = document.getElementById('game');
@@ -37,14 +53,15 @@ export function init() {
   ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
 
-  input.init({ isDebug: true });
+  input.init();
 
   spritesheet.define('hero', 0, 3 * 8, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
 
   scene.add('menu', menu);
   scene.add('level', level);
-  scene.load('menu');
+  scene.add('level-base', levelBase);
+  scene.load('level-base');
 
   process(update, render);
   start();
