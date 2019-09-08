@@ -13,9 +13,6 @@ import scene from './scene';
 import menu from './menu';
 import level from './level';
 
-scene.add('menu', menu);
-scene.add('level', level);
-
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
   isDebugDraw: false,
@@ -48,6 +45,8 @@ export function init() {
   spritesheet.define('hero', 0, 3 * 8, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
 
+  scene.add('menu', menu);
+  scene.add('level', level);
   scene.load('menu');
 
   process(update, render);
