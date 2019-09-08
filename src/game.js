@@ -9,13 +9,23 @@ import fx from './fx';
 import agent from './agent';
 import debug from '/lib/debug';
 import input from '/lib/input';
+import menu from './menu';
+
+const scenes = {
+  MENU: Symbol('menu'),
+  LEVEL: Symbol('level'),
+};
+
+const state = {
+  scene: scenes.MENU,
+};
 
 window.$globalConfig = {
   // Draw bbox around entities and grid for a map
   isDebugDraw: false,
   // Print each keystroke
   isDebugInput: false,
-}
+};
 
 let vw = 0;
 let vh = 0;
@@ -99,16 +109,22 @@ function update(dt) {
 function render() {
   cls(ctx);
 
-  camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);  
-  map(ctx);  
-  spritesheet.draw(ctx, 'hero', x, y);    
+  switch (state.scene) {
+    case scenes.MENU:
+      menu.render();
+      return;
+  }
+
+  camera(ctx, -20, -20, Math.cos(time++ / 200) * 10, Math.cos(time++ / 200) + 2);
+  map(ctx);
+  spritesheet.draw(ctx, 'hero', x, y);
   agent.draw(ctx);
-  
+
   debug.drawGrid(ctx);
 
   shake(ctx);
-  fx.draw(ctx);  
-  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);  
+  fx.draw(ctx);
+  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
   font.printOutline(
     ctx,
     'compo edition',
@@ -117,6 +133,4 @@ function render() {
     'white',
     'black',
   );
-
-  input.clear();
 }
