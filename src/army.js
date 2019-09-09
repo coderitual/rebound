@@ -30,14 +30,18 @@ function update(dt) {
 
 function draw(ctx) {
   for (let army of armies) {
+    spritesheet.draw(ctx, 'flag-red', army.x - 2, army.y - 3);
+
     ctx.lineWidth = 1;
 
     // cripsy dotted area
     for (let i = 0; i < 8; i++) {
       const x =
-        Math.round(Math.cos(((Math.PI * 2) / 8) * i + time) * 20) + army.x;
+        Math.round(Math.cos(((Math.PI * 2) / 8) * i + time) * config.range) +
+        army.x;
       const y =
-        Math.round(Math.sin(((Math.PI * 2) / 8) * i + time) * 20) + army.y;
+        Math.round(Math.sin(((Math.PI * 2) / 8) * i + time) * config.range) +
+        army.y;
 
       ctx.fillStyle = 'white';
       ctx.fillRect(x, y, 1, 1);
@@ -47,13 +51,11 @@ function draw(ctx) {
 
     // soldiers
     for (let i = 0; i < 3; i++) {
-      const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x + 5;
+      const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x + 7;
       const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * 3) + army.y + 10;
 
       spritesheet.draw(ctx, 'soldier-red', x - 2, y - 2);
     }
-
-    spritesheet.draw(ctx, 'flag-red', army.x - 2, army.y - 3);
   }
 }
 
