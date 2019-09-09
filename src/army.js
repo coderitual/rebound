@@ -9,6 +9,8 @@ const config = {
   range: 20,
 };
 
+let time = 0;
+
 function add({ x, y, count, player }) {
   armies.add({ x, y, count, player });
 }
@@ -21,20 +23,28 @@ function init() {
 }
 
 function update(dt) {
+  time += dt;
   for (let army of armies) {
   }
 }
 
 function draw(ctx) {
   for (let army of armies) {
-    ctx.beginPath();
-    ctx.setLineDash([10, 10]);
-    ctx.beginPath();
-    ctx.arc(100, 60, 50, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.stroke();
+    ctx.lineWidth = 1;
 
-    spritesheet.draw(ctx, 'flag-red', army.x, army.y);
+    // cripsy dotted area
+    for (let i = 0; i < 8; i++) {
+      const x =
+        Math.round(Math.cos(((Math.PI * 2) / 8) * i + time) * 20) + army.x;
+      const y =
+        Math.round(Math.sin(((Math.PI * 2) / 8) * i + time) * 20) + army.y;
+
+      ctx.fillStyle = 'white';
+      ctx.fillRect(x, y, 1, 1);
+      ctx.fillStyle = 'black';
+      ctx.fillRect(x, y + 1, 1, 1);
+    }
+    spritesheet.draw(ctx, 'flag-red', army.x - 2, army.y - 3);
   }
 }
 
