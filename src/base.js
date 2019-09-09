@@ -119,7 +119,6 @@ function updateBase(dt) {
 
       const radians = math.toRadians(item.angle);
       const direction = math.vecFromAngle(radians);
-      console.log(direction);
 
       const projectilePower = item.targetPower * config.maxProjectileVelocity;
 
