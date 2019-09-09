@@ -78,4 +78,7 @@ function update(dt) {
 function render() {
   cls(ctx);
   scene.render(ctx);
+
+  // Required to handle properly keyUpOnce
+  input.clear();
 }

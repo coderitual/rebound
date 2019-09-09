@@ -12,18 +12,20 @@ import base from './base';
 let time = 1;
 const cd = cooldown();
 
-let offset = 0;
+window.$globalConfig = window.$globalConfig || {};
+$globalConfig.shakeOffset = 0;
+
 export function shake(ctx) {
-  let fade = 0.95;
-  let offsetx = 16 - Math.random() * 32;
-  let offsety = 16 - Math.random() * 32;
-  offsetx *= offset;
-  offsety *= offset;
+  let fade = 0.96;
+  let offsetx = 8 - Math.random() * 16;
+  let offsety = 8 - Math.random() * 16;
+  offsetx *= $globalConfig.shakeOffset;
+  offsety *= $globalConfig.shakeOffset;
 
   camera(ctx, offsetx, offsety);
-  offset *= fade;
-  if (offset < 0.05) {
-    offset = 0;
+  $globalConfig.shakeOffset *= fade;
+  if ($globalConfig.shakeOffset < 0.08) {
+    $globalConfig.shakeOffset = 0;
   }
 }
 
@@ -60,6 +62,7 @@ function update(dt) {
 
 function render(ctx) {
   cls(ctx);
+  shake(ctx);
   map(ctx);
   base.draw(ctx);
   shape.drawGrid(ctx);
