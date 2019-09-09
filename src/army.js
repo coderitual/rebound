@@ -46,9 +46,9 @@ function draw(ctx) {
     }
 
     // soldiers
-    for (let i = 0; i < 8; i++) {
-      const x = Math.round(Math.cos(((Math.PI * 2) / 8) * i) * 10) + army.x;
-      const y = Math.round(Math.sin(((Math.PI * 2) / 8) * i) * 10) + army.y;
+    for (let i = 0; i < 3; i++) {
+      const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x + 5;
+      const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * 3) + army.y + 10;
 
       spritesheet.draw(ctx, 'soldier-red', x - 2, y - 2);
     }
