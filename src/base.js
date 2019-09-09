@@ -1,7 +1,9 @@
 import spritesheet from '/lib/spritesheet';
 import shape from '/lib/shape';
 import input from '/lib/input';
-import math from '/lib/math';
+import camera from '/lib/camera';
+import * as math from '/lib/math';
+import projectile from './projectile';
 
 const DEBUG_COLOR = '#FF0000';
 
@@ -22,7 +24,23 @@ let config = {
   powerSpeed: 0.025,
   defaultPower: 0,
   maxLenght: 25,
+  maxProjectileVelocity: 150,
 };
+
+let offset = 0;
+export function shake(ctx) {
+  let fade = 0.95;
+  let offsetx = 16 - Math.random() * 32;
+  let offsety = 16 - Math.random() * 32;
+  offsetx *= offset;
+  offsety *= offset;
+
+  camera(ctx, offsetx, offsety);
+  offset *= fade;
+  if (offset < 0.05) {
+    offset = 0;
+  }
+}
 
 function add({
   x,
@@ -33,7 +51,15 @@ function add({
   power = 1,
   targetPower = 1,
 }) {
-  items.add(...arguments);
+  items.add({
+    x,
+    y,
+    playerId,
+    targetAngle,
+    angle,
+    power,
+    targetPower,
+  });
 }
 
 function init() {
@@ -53,20 +79,24 @@ function init() {
   );
 }
 
-function update(dt) {
+function updateBase(dt) {
   for (let item of items) {
     const inputs = $globalConfig.playerInput[item.playerId];
+
+    // Rotate
     if (input.isDown(inputs.moveUpKey)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle -= config.angleSpeed;
     }
 
+    // Rotate
     if (input.isDown(inputs.moveDownKey)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle += config.angleSpeed;
     } else {
     }
 
+    // Set Firing Power!
     if (input.isDown(inputs.powerKey)) {
       item.targetPower = item.targetPower || 0;
       item.targetPower = Math.min(item.targetPower + config.powerSpeed, 1);
@@ -77,7 +107,35 @@ function update(dt) {
         config.defaultPower
       );
     }
+
+    // Fire!
+    if (input.isUp(inputs.powerKey)) {
+      const spawnCenter = {
+        x: item.x + config.baseWidth / 2,
+        y: item.y + config.baseHeight / 2,
+      };
+
+      $globalConfig.shakeOffset = 0.07 + item.targetPower * 0.05;
+
+      const radians = math.toRadians(item.angle);
+      const direction = math.vecFromAngle(radians);
+
+      const projectilePower = item.targetPower * config.maxProjectileVelocity;
+
+      projectile.add({
+        ...spawnCenter,
+        velocity: {
+          x: direction.x * projectilePower,
+          y: direction.y * projectilePower,
+        },
+      });
+    }
   }
+}
+
+function update(dt) {
+  updateBase(dt);
+  projectile.update(dt);
 }
 
 function drawBase(ctx) {
@@ -118,11 +176,11 @@ function drawShootLine(ctx) {
     ctx.beginPath();
 
     ctx.translate(x, y + Math.floor(width / 2));
-    ctx.rotate((angle * Math.PI) / 180);
+    ctx.rotate(math.toRadians(angle));
     ctx.moveTo(0, 0);
     ctx.lineTo(config.maxLenght, 0);
     ctx.lineWidth = 2;
-    ctx.strokeStyle = '#1f4f4a35';
+    ctx.strokeStyle = '#1f4f4a88';
     ctx.stroke();
     ctx.restore();
 
@@ -132,7 +190,7 @@ function drawShootLine(ctx) {
     ctx.beginPath();
 
     ctx.translate(x, y + Math.floor(width / 2));
-    ctx.rotate((angle * Math.PI) / 180);
+    ctx.rotate(math.toRadians(angle));
     ctx.moveTo(0, 0);
     ctx.lineTo(length, 0);
     ctx.lineWidth = 2;
@@ -162,6 +220,7 @@ function drawShootLine(ctx) {
 function draw(ctx) {
   drawBase(ctx);
   drawShootLine(ctx);
+  projectile.draw(ctx);
 }
 
 export default { draw, update, add, init };
