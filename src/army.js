@@ -44,6 +44,15 @@ function draw(ctx) {
       ctx.fillStyle = 'black';
       ctx.fillRect(x, y + 1, 1, 1);
     }
+
+    // soldiers
+    for (let i = 0; i < 8; i++) {
+      const x = Math.round(Math.cos(((Math.PI * 2) / 8) * i) * 10) + army.x;
+      const y = Math.round(Math.sin(((Math.PI * 2) / 8) * i) * 10) + army.y;
+
+      spritesheet.draw(ctx, 'soldier-red', x - 2, y - 2);
+    }
+
     spritesheet.draw(ctx, 'flag-red', army.x - 2, army.y - 3);
   }
 }
