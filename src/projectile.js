@@ -29,25 +29,8 @@ function destroy(item) {
   list.delete(item);
 }
 
+// For debug purpose only
 let lastCollision = null;
-
-function sphereCollide(source, velocity, target) {
-  var delta = { x: target.x - source.x, y: target.y - source.y };
-  var normD = Math.sqrt(delta.x * delta.x + delta.y * delta.y);
-  var normV = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
-  var v = { x: velocity.x / normV, y: velocity.y / normV };
-  delta.x = delta.x / normD;
-  delta.y = delta.y / normD;
-  var alpha = delta.x * v.x + delta.y * v.y;
-  var g = 2 * alpha * normV;
-  delta.x = g * delta.x;
-  delta.y = g * delta.y;
-  return {
-    x: velocity.x - delta.x,
-    y: velocity.y - delta.y,
-    alpha: alpha,
-  };
-}
 
 function update(dt) {
   for (let item of list) {
@@ -72,7 +55,6 @@ function update(dt) {
       const pos = { x, y };
       const npos = { x: nx, y: ny };
       const dir = math.vecSub(collider, npos);
-      // nvelocity = sphereCollide(item, nvelocity, collider);
       nvelocity = collider.velocity;
 
       nx = x + nvelocity.x * dt;
