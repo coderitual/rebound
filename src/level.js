@@ -16,7 +16,7 @@ function load() {
   input.init();
   army.init();
 
-  army.add({ x: 64, y: 64, count: 8, player: 1 });
+  army.add({ x: 84, y: 64, count: 8, player: 1 });
 }
 
 function update(dt) {
@@ -27,7 +27,7 @@ function update(dt) {
 
 function render(ctx) {
   cls(ctx);
-  camera(ctx, 128, 0);
+  camera(ctx, 0, 0);
   map(ctx);
   camera(ctx);
   army.draw(ctx);
