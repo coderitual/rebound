@@ -20,7 +20,7 @@ let config = {
   maxShootWidth: 10,
 
   // Shooting behaviour
-  angleSpeed: 5,
+  angleSpeed: 3.5,
   powerSpeed: 0.025,
   defaultPower: 0,
   maxLenght: 25,
@@ -135,6 +135,15 @@ function updateBase(dt) {
 
 function update(dt) {
   updateBase(dt);
+
+  if (input.isDownOnce('Digit1')) {
+    if (!config.defaultPower) {
+      config.defaultPower = 1;
+    } else {
+      config.defaultPower = 0;
+    }
+  }
+
   projectile.update(dt);
 }
 

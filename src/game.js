@@ -11,28 +11,6 @@ import menu from './menu';
 import level from './level';
 import levelBase from './level-base';
 
-window.$globalConfig = {
-  // Draw bbox around entities and grid for a map
-  isDebugDraw: false,
-
-  // Print each keystroke
-  isDebugInput: false,
-
-  // TODO: Add button mapping for keys
-  playerInput: {
-    0: {
-      moveUpKey: 'ArrowUp',
-      moveDownKey: 'ArrowDown',
-      powerKey: 'ControlRight',
-    },
-    1: {
-      moveUpKey: 'KeyW',
-      moveDownKey: 'KeyS',
-      powerKey: 'Space',
-    },
-  },
-};
-
 let canvas;
 let ctx;
 let vw;
