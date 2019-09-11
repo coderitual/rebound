@@ -29,8 +29,8 @@ const initialState = {
 
 let state;
 
-events.on(constants.EV_PROJECTILE_DIED, args => {
-  console.log('projectile died', { args });
+events.on(constants.EV_PROJECTILE_DIED, ({ x, y }) => {
+  army.add({ x: Math.round(x), y: Math.round(y), count: 8, player: 1 });
 });
 
 function load() {
@@ -92,10 +92,10 @@ function render(ctx) {
     );
   }
 
-  ui.health(0, 0, state.player1.health);
-  ui.cash(0, 0, state.player1.health);
-  ui.health(0, 0, state.player2.health);
-  ui.cash(0, 0, state.player2.health);
+  ui.health(ctx, 0, 0, state.player1.health);
+  ui.cash(ctx, 0, 118, state.player1.cash);
+  ui.health(ctx, 100, 0, state.player2.health);
+  ui.cash(ctx, 100, 118, state.player2.cash);
 }
 
 export default { load, update, render };
