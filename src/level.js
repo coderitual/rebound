@@ -29,8 +29,9 @@ const initialState = {
 
 let state;
 
-events.on(constants.EV_PROJECTILE_DIED, ({ x, y }) => {
-  army.add({ x: Math.round(x), y: Math.round(y), count: 8, player: 1 });
+events.on(constants.EV_PROJECTILE_DIED, ({ x, y, playerId }) => {
+  console.log(playerId);
+  army.add({ x: Math.round(x), y: Math.round(y), count: 8, playerId });
 });
 
 function load() {
@@ -60,8 +61,6 @@ function load() {
     power: 1,
     targetPower: 0,
   });
-
-  army.add({ x: 84, y: 64, count: 8, player: 1 });
 }
 
 function update(dt) {

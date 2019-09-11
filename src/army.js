@@ -11,8 +11,8 @@ const config = {
 
 let time = 0;
 
-function add({ x, y, count, player }) {
-  armies.add({ x, y, count, player });
+function add({ x, y, count, playerId }) {
+  armies.add({ x, y, count, playerId });
 }
 
 function init() {
@@ -20,6 +20,10 @@ function init() {
   spritesheet.define('soldier-blue', 8, 24, 4, 5);
   spritesheet.define('flag-red', 0, 32, 8, 8);
   spritesheet.define('flag-blue', 8, 32, 8, 8);
+}
+
+function spriteForPlayer(id, sprite) {
+  return `${sprite}-${id === 0 ? 'red' : 'blue'}`;
 }
 
 function update(dt) {
@@ -30,7 +34,12 @@ function update(dt) {
 
 function draw(ctx) {
   for (let army of armies) {
-    spritesheet.draw(ctx, 'flag-red', army.x - 2, army.y - 3);
+    spritesheet.draw(
+      ctx,
+      spriteForPlayer(army.playerId, 'flag'),
+      army.x - 2,
+      army.y - 3
+    );
 
     ctx.lineWidth = 1;
 
@@ -54,7 +63,12 @@ function draw(ctx) {
       const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x + 7;
       const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * 3) + army.y + 10;
 
-      spritesheet.draw(ctx, 'soldier-red', x - 2, y - 2);
+      spritesheet.draw(
+        ctx,
+        spriteForPlayer(army.playerId, 'soldier'),
+        x - 2,
+        y - 2
+      );
     }
   }
 }
