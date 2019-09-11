@@ -1,6 +1,8 @@
 import shape from '/lib/shape';
 import * as math from '/lib/math';
 import { getCollider } from '/lib/map';
+import events from './events';
+import * as constants from './constants';
 
 function update(dt) {}
 
@@ -26,6 +28,7 @@ function add({
 }
 
 function destroy(item) {
+  events.trigger(constants.EV_PROJECTILE_DIED, item);
   list.delete(item);
 }
 

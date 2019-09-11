@@ -28,6 +28,10 @@ const initialState = {
 
 let state;
 
+events.on(constants.EV_PROJECTILE_DIED, args => {
+  console.log('projectile died', { args });
+});
+
 function load() {
   state = { ...initialState };
   cd.set('intro');
