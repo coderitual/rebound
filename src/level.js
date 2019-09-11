@@ -9,11 +9,29 @@ import shape from '/lib/shape';
 import input from '/lib/input';
 import army from './army';
 import base from './base';
+import events from './events';
+import * as constants from './constants';
 
 let time = 1;
 const cd = cooldown();
 
+const initialState = {
+  player1: {
+    health: 10,
+    cash: 10,
+  },
+  player2: {
+    health: 10,
+    cash: 10,
+  },
+};
+
+let state;
+
 function load() {
+  state = { ...initialState };
+  cd.set('intro');
+
   input.init();
   army.init();
   base.init();
@@ -56,6 +74,18 @@ function render(ctx) {
   base.draw(ctx);
   army.draw(ctx);
   shape.drawGrid(ctx);
+
+  if (cd.has('intro')) {
+    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
+    font.printOutline(
+      ctx,
+      'compo edition',
+      (128 - 'compo edition'.length * 4) / 2,
+      70,
+      'white',
+      'black'
+    );
+  }
 }
 
 export default { load, update, render };

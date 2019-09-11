@@ -39,7 +39,7 @@ export function init() {
   scene.add('menu', menu);
   scene.add('level', level);
   scene.add('level-base', levelBase);
-  scene.load('level-base');
+  scene.load('level');
 
   process(update, render);
   start();

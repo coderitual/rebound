@@ -1,13 +1,16 @@
 const events = new Map();
 
-function on(name, callback) {
-  events.set(name, [...(events.get(name) || []), callback]);
+function on(event, callback) {
+  events.set(event, [...(events.get(event) || []), callback]);
 }
-function trigger(name, ...params) {
-  if (!events.has(name)) {
+function trigger(event, ...params) {
+  if (!events.has(event)) {
     return;
   }
-  events.get(name).forEach(callback => callback(...params));
+  events.get(event).forEach(callback => callback(...params));
 }
 
-export default { on, trigger };
+export default {
+  on,
+  trigger,
+};
