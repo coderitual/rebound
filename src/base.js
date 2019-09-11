@@ -128,6 +128,7 @@ function updateBase(dt) {
           x: direction.x * projectilePower,
           y: direction.y * projectilePower,
         },
+        playerId: item.playerId,
       });
     }
   }
