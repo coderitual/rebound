@@ -6,9 +6,9 @@ spritesheet.define('heart', 0, 5 * 8, 7, 7);
 export default {
   health(ctx, x, y, value) {
     spritesheet.draw(ctx, 'heart', x, y);
-    font.print(ctx, 10, 10, value);
+    font.printOutline(ctx, `${value}`, x + 10, y);
   },
   cash(ctx, x, y, value) {
-    font.printOutline(ctx, x, y, `$${value}`, '#ffa300');
+    font.printOutline(ctx, `$${value}`, x, y, '#ffa300');
   },
 };

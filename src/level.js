@@ -92,10 +92,11 @@ function render(ctx) {
     );
   }
 
-  ui.health(ctx, 0, 0, state.player1.health);
-  ui.cash(ctx, 0, 118, state.player1.cash);
-  ui.health(ctx, 100, 0, state.player2.health);
-  ui.cash(ctx, 100, 118, state.player2.cash);
+  ui.health(ctx, 1, 1, state.player1.health);
+  ui.cash(ctx, 1, 120, state.player1.cash);
+
+  ui.health(ctx, 104, 1, state.player2.health, true);
+  ui.cash(ctx, 110, 120, state.player2.cash, true);
 }
 
 export default { load, update, render };
