@@ -11,6 +11,7 @@ import army from './army';
 import base from './base';
 import events from './events';
 import * as constants from './constants';
+import ui from './ui';
 
 let time = 1;
 const cd = cooldown();
@@ -90,6 +91,11 @@ function render(ctx) {
       'black'
     );
   }
+
+  ui.health(0, 0, state.player1.health);
+  ui.cash(0, 0, state.player1.health);
+  ui.health(0, 0, state.player2.health);
+  ui.cash(0, 0, state.player2.health);
 }
 
 export default { load, update, render };
