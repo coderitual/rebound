@@ -17,12 +17,12 @@ const cd = cooldown();
 
 const initialState = {
   player1: {
-    health: 10,
-    cash: 10,
+    health: 100,
+    cash: 100,
   },
   player2: {
-    health: 10,
-    cash: 10,
+    health: 100,
+    cash: 100,
   },
 };
 
