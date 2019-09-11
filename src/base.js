@@ -84,13 +84,13 @@ function updateBase(dt) {
     const inputs = $globalConfig.playerInput[item.playerId];
 
     // Rotate
-    if (input.isDown(inputs.moveUpKey)) {
+    if (input.isDown(inputs.rotateLeft)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle -= config.angleSpeed;
     }
 
     // Rotate
-    if (input.isDown(inputs.moveDownKey)) {
+    if (input.isDown(inputs.rotateRight)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle += config.angleSpeed;
     } else {
