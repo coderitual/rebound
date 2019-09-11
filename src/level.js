@@ -35,7 +35,7 @@ events.on(constants.EV_PROJECTILE_DIED, ({ x, y }) => {
 
 function load() {
   state = { ...initialState };
-  cd.set('intro');
+  cd.set('intro', 3);
 
   input.init();
   army.init();
