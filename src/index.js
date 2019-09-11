@@ -17,7 +17,7 @@ window.$globalConfig = {
     1: {
       rotateLeft: 'KeyA',
       rotateRight: 'KeyD',
-      powerKey: 'Tab',
+      powerKey: 'KeyQ',
     },
   },
 };
