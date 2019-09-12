@@ -23,24 +23,9 @@ let config = {
   angleSpeed: 3.5,
   powerSpeed: 0.025,
   defaultPower: 0,
-  maxLenght: 25,
+  maxLength: 25,
   maxProjectileVelocity: 150,
 };
-
-let offset = 0;
-export function shake(ctx) {
-  let fade = 0.95;
-  let offsetx = 16 - Math.random() * 32;
-  let offsety = 16 - Math.random() * 32;
-  offsetx *= offset;
-  offsety *= offset;
-
-  camera(ctx, offsetx, offsety);
-  offset *= fade;
-  if (offset < 0.05) {
-    offset = 0;
-  }
-}
 
 function add({
   x,
@@ -165,6 +150,23 @@ function drawBase(ctx) {
   }
 }
 
+function drawLine(ctx, x, y, width, angle, style, length, lineDash) {
+  ctx.save();
+  ctx.beginPath();
+
+  ctx.translate(x, y + Math.floor(width / 2));
+  ctx.rotate(math.toRadians(angle));
+  ctx.moveTo(0, 0);
+  ctx.lineTo(length, 0);
+  if (lineDash) {
+    ctx.setLineDash(lineDash);
+  }
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = style;
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawShootLine(ctx) {
   for (var item of items) {
     let { x, y, targetAngle, angle, power, targetPower } = item;
@@ -178,49 +180,16 @@ function drawShootLine(ctx) {
     power = Math.min(math.lerp(power, targetPower, 0.07), 1);
 
     const width = 2;
-    const length = config.maxLenght * power;
+    const length = config.maxLength * power;
 
     // Projection
-
-    ctx.save();
-    ctx.beginPath();
-
-    ctx.translate(x, y + Math.floor(width / 2));
-    ctx.rotate(math.toRadians(angle));
-    ctx.moveTo(0, 0);
-    ctx.lineTo(config.maxLenght, 0);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#1f4f4a88';
-    ctx.stroke();
-    ctx.restore();
+    drawLine(ctx, x, y, width, angle, '#1f4f4a88', config.maxLength);
 
     // Fill color
-
-    ctx.save();
-    ctx.beginPath();
-
-    ctx.translate(x, y + Math.floor(width / 2));
-    ctx.rotate(math.toRadians(angle));
-    ctx.moveTo(0, 0);
-    ctx.lineTo(length, 0);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#1f4f4aaa';
-    ctx.stroke();
-    ctx.restore();
+    drawLine(ctx, x, y, width, angle, '#1f4f4aff', length);
 
     // Current power
-    ctx.save();
-    ctx.beginPath();
-
-    ctx.translate(x, y + Math.floor(width / 2));
-    ctx.rotate((angle * Math.PI) / 180);
-    ctx.moveTo(0, 0);
-    ctx.lineTo(length, 0);
-    ctx.setLineDash([2, 2]);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#86da04';
-    ctx.stroke();
-    ctx.restore();
+    drawLine(ctx, x, y, width, angle, '#ffff', length, [2, 2]);
 
     item.angle = angle;
     item.power = power;
