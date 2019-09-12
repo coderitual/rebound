@@ -9,8 +9,7 @@ import shape from '/lib/shape';
 import input from '/lib/input';
 import army from './army';
 import base from './base';
-import events from './events';
-import * as constants from './constants';
+import store from './store';
 import ui from './ui';
 
 let time = 1;
@@ -27,15 +26,12 @@ const initialState = {
   },
 };
 
-let state;
-
-events.on(constants.EV_PROJECTILE_DIED, ({ x, y, playerId }) => {
-  console.log(playerId);
+store.onProjectileDied = ({ x, y, playerId }) => {
   army.add({ x: Math.round(x), y: Math.round(y), count: 8, playerId });
-});
+};
 
 function load() {
-  state = { ...initialState };
+  store.state = { ...initialState };
   cd.set('intro', 2);
 
   input.init();
@@ -91,11 +87,11 @@ function render(ctx) {
     );
   }
 
-  ui.health(ctx, 1, 1, state.player1.health);
-  ui.cash(ctx, 1, 120, state.player1.cash);
+  ui.health(ctx, 1, 1, store.state.player1.health);
+  ui.cash(ctx, 1, 120, store.state.player1.cash);
 
-  ui.health(ctx, 104, 1, state.player2.health, true);
-  ui.cash(ctx, 110, 120, state.player2.cash, true);
+  ui.health(ctx, 104, 1, store.state.player2.health, true);
+  ui.cash(ctx, 110, 120, store.state.player2.cash, true);
 }
 
 export default { load, update, render };

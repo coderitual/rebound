@@ -82,6 +82,7 @@ function updateBase(dt) {
     }
 
     // Set Firing Power!
+
     if (input.isDown(inputs.powerKey)) {
       item.targetPower = item.targetPower || 0;
       item.targetPower = Math.min(item.targetPower + config.powerSpeed, 1);

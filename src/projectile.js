@@ -1,8 +1,7 @@
 import shape from '/lib/shape';
 import * as math from '/lib/math';
 import { getCollider } from '/lib/map';
-import events from './events';
-import * as constants from './constants';
+import store from './store';
 
 const list = new Set();
 
@@ -28,7 +27,7 @@ function add({
 }
 
 function destroy(item) {
-  events.trigger(constants.EV_PROJECTILE_DIED, item);
+  store.onProjectileDied(item);
   list.delete(item);
 }
 
