@@ -28,7 +28,6 @@ function add({
 }
 
 function destroy(item) {
-  console.log(item);
   events.trigger(constants.EV_PROJECTILE_DIED, item);
   list.delete(item);
 }
