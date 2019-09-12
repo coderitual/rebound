@@ -6,60 +6,96 @@ import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
 import shape from '/lib/shape';
+import input from '/lib/input';
+import army from './army';
+import base from './base';
+import events from './events';
+import * as constants from './constants';
+import ui from './ui';
 
 let time = 1;
 const cd = cooldown();
 
-let offset = 0;
-export function shake(ctx) {
-  let fade = 0.95;
-  let offsetX = 16 - Math.random() * 32;
-  let offsetY = 16 - Math.random() * 32;
-  offsetX *= offset;
-  offsetY *= offset;
+const initialState = {
+  player1: {
+    health: 100,
+    cash: 100,
+  },
+  player2: {
+    health: 100,
+    cash: 100,
+  },
+};
 
-  camera(ctx, offsetX, offsetY);
-  offset *= fade;
-  if (offset < 0.05) {
-    offset = 0;
-  }
+let state;
+
+events.on(constants.EV_PROJECTILE_DIED, ({ x, y, playerId }) => {
+  console.log(playerId);
+  army.add({ x: Math.round(x), y: Math.round(y), count: 8, playerId });
+});
+
+function load() {
+  state = { ...initialState };
+  cd.set('intro', 2);
+
+  input.init();
+  army.init();
+  base.init();
+
+  base.add({
+    playerId: 0,
+    x: 110,
+    y: 64 - 5,
+    angle: 90,
+    targetAngle: 180,
+    power: 1,
+    targetPower: 0,
+  });
+
+  base.add({
+    playerId: 1,
+    x: 4,
+    y: 64 - 5,
+    angle: -90,
+    targetAngle: 0,
+    power: 1,
+    targetPower: 0,
+  });
 }
 
-function load() {}
-
 function update(dt) {
-  if (!cd.hasSet('explosion', 2)) {
-    fx.explode(64, 64, 5, 100);
-    offset = 0.3;
-  }
-
+  army.update(dt);
+  base.update(dt);
   fx.update();
+  time += dt;
 }
 
 function render(ctx) {
   cls(ctx);
-
-  camera(
-    ctx,
-    -20,
-    -20,
-    Math.cos(time++ / 200) * 10,
-    Math.cos(time++ / 200) + 2
-  );
+  camera(ctx, 0, 0);
   map(ctx);
+  camera(ctx);
+  base.draw(ctx);
+  army.draw(ctx);
   shape.drawGrid(ctx);
 
-  shake(ctx);
-  fx.draw(ctx);
-  spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-  font.printOutline(
-    ctx,
-    'compo edition',
-    (128 - 'compo edition'.length * 4) / 2,
-    70,
-    'white',
-    'black'
-  );
+  if (cd.has('intro')) {
+    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
+    font.printOutline(
+      ctx,
+      'compo edition',
+      (128 - 'compo edition'.length * 4) / 2,
+      70,
+      'white',
+      'black'
+    );
+  }
+
+  ui.health(ctx, 1, 1, state.player1.health);
+  ui.cash(ctx, 1, 120, state.player1.cash);
+
+  ui.health(ctx, 104, 1, state.player2.health, true);
+  ui.cash(ctx, 110, 120, state.player2.cash, true);
 }
 
 export default { load, update, render };

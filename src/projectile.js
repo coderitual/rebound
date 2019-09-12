@@ -1,6 +1,8 @@
 import shape from '/lib/shape';
 import * as math from '/lib/math';
 import { getCollider } from '/lib/map';
+import events from './events';
+import * as constants from './constants';
 
 const list = new Set();
 
@@ -10,6 +12,7 @@ function add({
   velocity = { x: 0, y: 0 },
   drag = 0.985,
   idleVelocityMagnitude = 3.5,
+  playerId = 0,
 }) {
   const item = {
     x,
@@ -17,6 +20,7 @@ function add({
     drag,
     velocity,
     idleVelocityMagnitude,
+    playerId,
   };
 
   list.add(item);
@@ -24,6 +28,8 @@ function add({
 }
 
 function destroy(item) {
+  console.log(item);
+  events.trigger(constants.EV_PROJECTILE_DIED, item);
   list.delete(item);
 }
 

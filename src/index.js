@@ -10,14 +10,14 @@ window.$globalConfig = {
   // TODO: Add button mapping for keys
   playerInput: {
     0: {
-      moveUpKey: 'ArrowUp',
-      moveDownKey: 'ArrowDown',
+      rotateLeft: 'ArrowLeft',
+      rotateRight: 'ArrowRight',
       powerKey: 'ControlRight',
     },
     1: {
-      moveUpKey: 'KeyW',
-      moveDownKey: 'KeyS',
-      powerKey: 'Space',
+      rotateLeft: 'KeyA',
+      rotateRight: 'KeyD',
+      powerKey: 'KeyQ',
     },
   },
 };
