@@ -42,7 +42,9 @@ function update(dt) {
 
 function draw(ctx) {
   for (let army of all) {
-    ctx.globalAlpha = 0.02;
+    ctx.save();
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.globalAlpha = 0.03;
     ctx.beginPath();
     ctx.arc(army.x, army.y, army.range, 0, 2 * Math.PI, false);
     ctx.fillStyle = 'black';
@@ -50,10 +52,10 @@ function draw(ctx) {
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'black';
     ctx.stroke();
-    ctx.globalAlpha = 1;
+    ctx.restore();
 
     // soldiers
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < Math.ceil(army.health) / 10; i++) {
       const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x;
       const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * 3) + army.y;
 
