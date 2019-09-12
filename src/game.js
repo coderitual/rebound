@@ -1,13 +1,8 @@
 import process, { start } from '/lib/process';
-import font from '/lib/font';
 import spritesheet from '/lib/spritesheet';
-import map from '/lib/map';
-import camera from '/lib/camera';
 import cls from '/lib/cls';
-import cooldown from '/lib/cooldown';
 import input from '/lib/input';
 import scene from './scene';
-import menu from './menu';
 import level from './level';
 
 let canvas;
@@ -32,12 +27,9 @@ export function init() {
 
   input.init();
 
-  spritesheet.define('hero', 0, 3 * 8, 8, 8);
   spritesheet.define('title', 0, 8, 56, 16);
 
-  scene.add('menu', menu);
   scene.add('level', level);
-  scene.add('level-base', levelBase);
   scene.load('level');
 
   process(update, render);
