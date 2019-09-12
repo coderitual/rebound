@@ -3,16 +3,16 @@ import shape from '/lib/shape';
 import input from '/lib/input';
 import math from '/lib/math';
 
-const armies = new Set();
+const all = new Set();
 
 const config = {
-  range: 20,
+  range: 10,
 };
 
 let time = 0;
 
 function add({ x, y, count, playerId }) {
-  armies.add({ x, y, count, playerId });
+  all.add({ x, y, count, playerId });
 }
 
 function init() {
@@ -28,12 +28,12 @@ function spriteForPlayer(id, sprite) {
 
 function update(dt) {
   time += dt;
-  for (let army of armies) {
+  for (let army of all) {
   }
 }
 
 function draw(ctx) {
-  for (let army of armies) {
+  for (let army of all) {
     // soldiers
     for (let i = 0; i < 3; i++) {
       const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x;
@@ -49,4 +49,4 @@ function draw(ctx) {
   }
 }
 
-export default { draw, update, add, init };
+export default { draw, update, add, init, all };
