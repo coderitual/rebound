@@ -1,9 +1,9 @@
 import spritesheet from '/lib/spritesheet';
 import shape from '/lib/shape';
 import input from '/lib/input';
-import camera from '/lib/camera';
 import * as math from '/lib/math';
 import projectile from './projectile';
+import store from './store';
 
 const DEBUG_COLOR = '#FF0000';
 
@@ -95,7 +95,12 @@ function updateBase(dt) {
     }
 
     // Fire!
-    if (input.isUp(inputs.powerKey)) {
+    if (
+      input.isUp(inputs.powerKey) &&
+      store.canProjectileLaunch(item.playerId)
+    ) {
+      store.onProjectileLaunch(item.playerId);
+
       const spawnCenter = {
         x: item.x + config.baseWidth / 2,
         y: item.y + config.baseHeight / 2,

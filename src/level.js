@@ -15,20 +15,24 @@ import ui from './ui';
 let time = 1;
 const cd = cooldown();
 
+// Game logic
+
 const initialState = {
-  player1: {
-    health: 100,
-    cash: 100,
-  },
-  player2: {
-    health: 100,
-    cash: 100,
-  },
+  player: [{ cash: 100, health: 100 }, { cash: 100, health: 100 }],
 };
 
 store.onProjectileDied = ({ x, y, playerId }) => {
   army.add({ x: Math.round(x), y: Math.round(y), count: 8, playerId });
 };
+
+store.canProjectileLaunch = playerId => {
+  return store.state.player[playerId].cash >= 30;
+};
+store.onProjectileLaunch = playerId => {
+  store.state.player[playerId].cash -= 30;
+};
+
+// Lifecycyle
 
 function load() {
   store.state = { ...initialState };
@@ -86,12 +90,10 @@ function render(ctx) {
       'black'
     );
   }
-
-  ui.health(ctx, 1, 1, store.state.player1.health);
-  ui.cash(ctx, 1, 120, store.state.player1.cash);
-
-  ui.health(ctx, 104, 1, store.state.player2.health, true);
-  ui.cash(ctx, 110, 120, store.state.player2.cash, true);
+  ui.health(ctx, 104, 1, store.state.player[0].health, true);
+  ui.cash(ctx, 110, 120, store.state.player[0].cash, true);
+  ui.health(ctx, 1, 1, store.state.player[1].health);
+  ui.cash(ctx, 1, 120, store.state.player[1].cash);
 }
 
 export default { load, update, render };
