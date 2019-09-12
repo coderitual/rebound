@@ -70,7 +70,7 @@ function draw(ctx) {
 
   for (let item of list) {
     const { x, y } = item;
-    shape.drawCircle(ctx, x, y, 2);
+    shape.drawCircle(ctx, Math.round(x), Math.round(y), 1);
   }
 }
 
