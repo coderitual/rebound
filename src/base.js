@@ -7,7 +7,7 @@ import store from './store';
 
 const DEBUG_COLOR = '#FF0000';
 
-const items = new Set();
+const all = new Set();
 
 let config = {
   // Rendering
@@ -36,7 +36,7 @@ function add({
   power = 1,
   targetPower = 1,
 }) {
-  items.add({
+  all.add({
     x,
     y,
     playerId,
@@ -65,7 +65,7 @@ function init() {
 }
 
 function updateBase(dt) {
-  for (let item of items) {
+  for (let item of all) {
     const inputs = $globalConfig.playerInput[item.playerId];
 
     // Rotate
@@ -140,7 +140,7 @@ function update(dt) {
 }
 
 function drawBase(ctx) {
-  for (let i of items) {
+  for (let i of all) {
     if ($globalConfig.isDebugDraw) {
       shape.drawRect(
         ctx,
@@ -174,7 +174,7 @@ function drawLine(ctx, x, y, width, angle, style, length, lineDash) {
 }
 
 function drawShootLine(ctx) {
-  for (var item of items) {
+  for (var item of all) {
     let { x, y, targetAngle, angle, power, targetPower } = item;
 
     x = Math.floor(x + config.baseWidth / 2);
@@ -208,4 +208,4 @@ function draw(ctx) {
   projectile.draw(ctx);
 }
 
-export default { draw, update, add, init };
+export default { draw, update, add, init, all };
