@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="2019.08.14" name="sprites" tilewidth="8" tileheight="8" tilecount="256" columns="16">
+<tileset version="1.2" tiledversion="1.2.4" name="sprites" tilewidth="8" tileheight="8" tilecount="256" columns="16">
  <image source="sprites.png" trans="000000" width="128" height="128"/>
  <terraintypes>
   <terrain name="New Terrain" tile="0"/>
@@ -8,6 +8,11 @@
   <properties>
    <property name="type" value="hero"/>
   </properties>
+ </tile>
+ <tile id="112">
+  <objectgroup draworder="index">
+   <object id="5" x="0" y="0" width="8" height="4"/>
+  </objectgroup>
  </tile>
  <tile id="165" terrain=",,,0"/>
  <tile id="166" terrain=",,0,0"/>
