@@ -3,4 +3,5 @@ export default {
   onProjectileDied: () => {},
   canProjectileLaunch: () => {},
   onProjectileLaunch: () => {},
+  onHarvest: () => {},
 };

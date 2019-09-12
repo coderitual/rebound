@@ -18,7 +18,10 @@ const cd = cooldown();
 // Game logic
 
 const initialState = {
-  player: [{ cash: 100, health: 100 }, { cash: 100, health: 100 }],
+  player: [
+    { cash: 100, health: 100, fields: 0 },
+    { cash: 100, health: 100, fields: 0 },
+  ],
 };
 
 store.onProjectileDied = ({ x, y, playerId }) => {
@@ -30,6 +33,17 @@ store.canProjectileLaunch = playerId => {
 };
 store.onProjectileLaunch = playerId => {
   store.state.player[playerId].cash -= 30;
+};
+
+store.onHarvest = () => {
+  const MAX_CASH = 200;
+  // 1 by default because base generate cash
+  for (let i = 0; i < 2; i++) {
+    store.state.player[i].cash += store.state.player[i].fields + 1;
+    if (store.state.player[i].cash > MAX_CASH) {
+      store.state.player[i].cash = MAX_CASH;
+    }
+  }
 };
 
 // Lifecycyle
@@ -64,6 +78,10 @@ function load() {
 }
 
 function update(dt) {
+  if (!cd.hasSet('harvest', 0.5)) {
+    store.onHarvest();
+  }
+
   army.update(dt);
   base.update(dt);
   fx.update();
