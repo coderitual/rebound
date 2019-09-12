@@ -5,9 +5,7 @@ import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
-import agent from './agent';
 import shape from '/lib/shape';
-import input from '/lib/input';
 
 let time = 1;
 const cd = cooldown();
@@ -15,27 +13,19 @@ const cd = cooldown();
 let offset = 0;
 export function shake(ctx) {
   let fade = 0.95;
-  let offsetx = 16 - Math.random() * 32;
-  let offsety = 16 - Math.random() * 32;
-  offsetx *= offset;
-  offsety *= offset;
+  let offsetX = 16 - Math.random() * 32;
+  let offsetY = 16 - Math.random() * 32;
+  offsetX *= offset;
+  offsetY *= offset;
 
-  camera(ctx, offsetx, offsety);
+  camera(ctx, offsetX, offsetY);
   offset *= fade;
   if (offset < 0.05) {
     offset = 0;
   }
 }
 
-function load() {
-  agent.add({
-    x: 0,
-    y: 0,
-    width: 4,
-    height: 4,
-    sprite: 'hero',
-  });
-}
+function load() {}
 
 function update(dt) {
   if (!cd.hasSet('explosion', 2)) {
@@ -57,8 +47,6 @@ function render(ctx) {
     Math.cos(time++ / 200) + 2
   );
   map(ctx);
-  agent.draw(ctx);
-
   shape.drawGrid(ctx);
 
   shake(ctx);
