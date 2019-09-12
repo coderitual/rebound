@@ -1,7 +1,8 @@
 export default {
   state: {},
-  onProjectileDied: () => {},
-  canProjectileLaunch: () => {},
-  onProjectileLaunch: () => {},
+  onProjectileDied: projectile => {},
+  canProjectileLaunch: playerId => {},
+  onProjectileLaunch: playerId => {},
   onHarvest: () => {},
+  onBaseAttack: (army, base) => {},
 };

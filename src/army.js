@@ -12,7 +12,7 @@ const config = {
 let time = 0;
 
 function add({ x, y, count, playerId }) {
-  all.add({ x, y, count, playerId });
+  all.add({ x, y, count, playerId, range: config.range });
 }
 
 function init() {
@@ -34,6 +34,16 @@ function update(dt) {
 
 function draw(ctx) {
   for (let army of all) {
+    ctx.globalAlpha = 0.02;
+    ctx.beginPath();
+    ctx.arc(army.x, army.y, army.range, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
     // soldiers
     for (let i = 0; i < 3; i++) {
       const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x;

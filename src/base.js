@@ -10,6 +10,7 @@ const DEBUG_COLOR = '#FF0000';
 const all = new Set();
 
 let config = {
+  range: 20,
   // Rendering
   baseSprite: 'base',
   shootEndSprite: 'shoot-end',
@@ -44,6 +45,7 @@ function add({
     angle,
     power,
     targetPower,
+    range: config.range,
   });
 }
 

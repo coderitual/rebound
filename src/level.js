@@ -82,6 +82,18 @@ function update(dt) {
     store.onHarvest();
   }
 
+  // check army base collistions
+  army.all.forEach(a => {
+    base.all.forEach(b => {
+      if (
+        a.playerId !== b.playerId &&
+        Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+      ) {
+        store.onBaseAttack(a, b);
+      }
+    });
+  });
+
   army.update(dt);
   base.update(dt);
   fx.update();
