@@ -9,7 +9,6 @@ import input from '/lib/input';
 import scene from './scene';
 import menu from './menu';
 import level from './level';
-import levelBase from './level-base';
 
 let canvas;
 let ctx;
