@@ -7,12 +7,20 @@ const all = new Set();
 
 const config = {
   range: 10,
+  health: 30,
 };
 
 let time = 0;
 
 function add({ x, y, count, playerId }) {
-  all.add({ x, y, count, playerId, range: config.range });
+  all.add({
+    x,
+    y,
+    count,
+    playerId,
+    range: config.range,
+    health: config.health,
+  });
 }
 
 function init() {
