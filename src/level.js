@@ -37,8 +37,8 @@ const fields = {
 
 const initialState = {
   player: [
-    { cash: 500, health: 100, fields: 0 },
-    { cash: 500, health: 100, fields: 0 },
+    { cash: 200, health: 100, fields: 0 },
+    { cash: 200, health: 100, fields: 0 },
   ],
   winner: 0,
   gameover: false,
@@ -67,7 +67,7 @@ store.onHarvest = () => {
 };
 
 store.onArmyFight = (a, b) => {
-  if (a.state === 'dead' || b.state === 'dead') {
+  if (a.state === 'dead' && b.state === 'dead') {
     return;
   }
 
@@ -93,10 +93,9 @@ store.onArmyFight = (a, b) => {
 };
 
 store.onBaseAttack = (a, b) => {
-  if (a.state === 'dead' || b.state === 'dead') {
+  if (a.state === 'dead') {
     return;
   }
-
   store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
   a.health -= Math.round(Math.random() * 5);
 
@@ -167,6 +166,33 @@ function update(dt) {
 
   // check army - base collisions
   if (!cd.hasSet('collisions', 0.5)) {
+
+    if (store.state.player[0].state !== 'dead') {
+      store.state.player[0].state = 'idle';
+    }
+
+    if (store.state.player[1].state !== 'dead') {
+      store.state.player[1].state = 'idle';
+    }
+
+
+    // check army - army collisions
+    army.all.forEach(a => {
+      if (a.state === 'fight' && a.state !== 'dead') {
+        a.state = 'idle';
+      }
+
+      army.all.forEach(b => {
+        if (
+          a.playerId !== b.playerId &&
+          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+        ) {
+          store.onArmyFight(a, b);
+        }
+      });
+    });
+
+
     army.all.forEach(a => {
       base.all.forEach(b => {
         if (
@@ -174,18 +200,6 @@ function update(dt) {
           Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
         ) {
           store.onBaseAttack(a, b);
-        }
-      });
-    });
-
-    // check army - army collisions
-    army.all.forEach(a => {
-      army.all.forEach(b => {
-        if (
-          a.playerId !== b.playerId &&
-          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
-        ) {
-          store.onArmyFight(a, b);
         }
       });
     });

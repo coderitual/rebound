@@ -18,6 +18,7 @@ function add({ x, y, count, playerId }) {
     count,
     playerId,
     offsetY: 0,
+    offsetX: 0,
     range: config.range,
     health: config.health,
   });
@@ -40,6 +41,16 @@ function spriteForPlayer(id, sprite) {
 var frame = 0;
 
 function update(dt) {
+  if (frame % 128 === 0) {
+    console.log('update 24');
+    for (let army of all) {
+      if (army.offsetX === 0) {
+        army.offsetX = -1;
+      } else {
+        army.offsetX = 0;
+      }
+    }
+  }
   if (frame % 12 === 0) {
     for (let army of all) {
       if (army.state === 'fight') {
@@ -94,8 +105,8 @@ function draw(ctx) {
           engine.draw(
             ctx,
             spriteForPlayer(army.playerId, army.type),
-            x - 2,
-            y - 2 + (army.state === 'fight' ? army.offsetY : 0)
+            x - 2 + army.offsetX,
+            y - 2 + army.offsetY * ((i % 2) + 1)
           );
         } else {
           engine.draw(ctx, 'blood', x - 2, y - 2);
