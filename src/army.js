@@ -24,6 +24,7 @@ function add({ x, y, count, playerId }) {
 }
 
 function init() {
+  engine.define('blood', 32, 24, 4, 5);
   engine.define('cow-red', 16, 24, 8, 8);
   engine.define('cow-blue', 24, 24, 8, 8);
   engine.define('soldier-red', 0, 24, 4, 5);
@@ -65,32 +66,40 @@ function update(dt) {
 
 function draw(ctx) {
   for (let army of all) {
-    ctx.save();
-    ctx.globalCompositeOperation = 'multiply';
-    ctx.globalAlpha = 0.03;
-    ctx.beginPath();
-    ctx.arc(army.x, army.y, army.range, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-    ctx.restore();
+    const alive = army.health / 10;
 
-    const radius = army.type === 'cow' ? 5 : 3;
+    if (army.state !== 'dead' && alive > 0) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.globalAlpha = 0.03;
+      ctx.beginPath();
+      ctx.arc(army.x, army.y, army.range, 0, 2 * Math.PI, false);
+      ctx.fillStyle = 'black';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    const rd = army.type === 'cow' ? 5 : 3;
 
     if (army.type) {
       // soldiers
-      for (let i = 0; i < Math.ceil(army.health) / 10; i++) {
-        const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * radius) + army.x;
-        const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * radius) + army.y;
+      for (let i = 0; i < 3; i++) {
+        const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * rd) + army.x;
+        const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * rd) + army.y;
 
-        engine.draw(
-          ctx,
-          spriteForPlayer(army.playerId, army.type),
-          x - 2,
-          y - 2 + army.offsetY
-        );
+        if (i < alive) {
+          engine.draw(
+            ctx,
+            spriteForPlayer(army.playerId, army.type),
+            x - 2,
+            y - 2 + (army.state === 'fight' ? army.offsetY : 0)
+          );
+        } else {
+          engine.draw(ctx, 'blood', x - 2, y - 2);
+        }
       }
     }
   }
