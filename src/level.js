@@ -17,6 +17,14 @@ const cd = cooldown();
 
 // Game logic
 
+const fields = {
+  all: [
+    { x: 48, y: 24, range: 8 },
+    { x: 100, y: 12, range: 12 },
+    { x: 60, y: 116, range: 12 },
+  ],
+};
+
 const initialState = {
   player: [
     { cash: 100, health: 100, fields: 0 },
@@ -113,10 +121,6 @@ function load() {
 }
 
 function update(dt) {
-  if (!cd.hasSet('harvest', 0.5)) {
-    store.onHarvest();
-  }
-
   // check army - base collistions
   if (!cd.hasSet('collisions', 0.5)) {
     army.all.forEach(a => {
@@ -141,6 +145,21 @@ function update(dt) {
         }
       });
     });
+
+    // calculaye fields usage
+    store.state.player[0].fields = 0;
+    store.state.player[1].fields = 0;
+    army.all.forEach(a => {
+      fields.all.forEach(b => {
+        if (Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range) {
+          store.state.player[a.playerId].fields++;
+        }
+      });
+    });
+  }
+
+  if (!cd.hasSet('harvest', 0.5)) {
+    store.onHarvest();
   }
 
   army.update(dt);
@@ -157,6 +176,18 @@ function render(ctx) {
   base.draw(ctx);
   army.draw(ctx);
   shape.drawGrid(ctx);
+
+  if ($globalConfig.isDebugDraw) {
+    fields.all.forEach(field => {
+      ctx.save();
+      ctx.globalAlpha = 0.2;
+      ctx.beginPath();
+      ctx.arc(field.x, field.y, field.range, 0, 2 * Math.PI, false);
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+      ctx.restore();
+    });
+  }
 
   if (cd.has('intro')) {
     spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
