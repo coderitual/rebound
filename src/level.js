@@ -1,8 +1,4 @@
 import engine from '/lib/engine';
-import map from '/lib/map';
-import camera from '/lib/camera';
-import cls from '/lib/cls';
-import cooldown from '/lib/cooldown';
 import fx from './fx';
 import army from './army';
 import base from './base';
@@ -10,7 +6,7 @@ import store from './store';
 import ui from './ui';
 
 let time = 1;
-const cd = cooldown();
+const cd = engine.cooldown();
 
 // Game logic
 
@@ -166,10 +162,10 @@ function update(dt) {
 }
 
 function render(ctx) {
-  cls(ctx);
-  camera(ctx, 0, 0);
-  map(ctx);
-  camera(ctx);
+  engine.cls(ctx);
+  engine.camera(ctx, 0, 0);
+  engine.map(ctx);
+  engine.camera(ctx);
   base.draw(ctx);
   army.draw(ctx);
   engine.drawGrid(ctx);
@@ -201,7 +197,7 @@ function render(ctx) {
   if (store.state.gameover) {
     if (cd.has('gameover')) {
       const text = `${store.state.winner === 0 ? 'red' : 'blue'} won!`;
-      font.printOutline(
+      engine.printOutline(
         ctx,
         text,
         (128 - text.length * 4) / 2,

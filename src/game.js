@@ -1,6 +1,5 @@
-import process, { start } from '/lib/process';
+import engine from '/lib/engine';
 import spritesheet from '/lib/engine';
-import cls from '/lib/cls';
 import input from '/lib/engine';
 import scene from './scene';
 import level from './level';
@@ -32,8 +31,8 @@ export function init() {
   scene.add('level', level);
   scene.load('level');
 
-  process(update, render);
-  start();
+  engine.process(update, render);
+  engine.start();
 }
 
 function update(dt) {
@@ -45,7 +44,7 @@ function update(dt) {
 }
 
 function render() {
-  cls(ctx);
+  engine.cls(ctx);
   scene.render(ctx);
 
   // Required to handle properly keyUpOnce

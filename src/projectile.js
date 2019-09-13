@@ -1,6 +1,4 @@
-import shape from '/lib/engine';
-import math from '/lib/engine';
-import { getCollider } from '/lib/map';
+import engine from '/lib/engine';
 import store from './store';
 
 const list = new Set();
@@ -34,7 +32,7 @@ function destroy(item) {
 function update(dt) {
   for (let item of list) {
     const { x, y, velocity, drag, idleVelocityMagnitude } = item;
-    if (math.vecLength(velocity) < idleVelocityMagnitude) {
+    if (engine.vecLength(velocity) < idleVelocityMagnitude) {
       // Destroy on idle
       destroy(item);
       return;
@@ -48,7 +46,7 @@ function update(dt) {
     let nx = x + nVelocity.x * dt;
     let ny = y + nVelocity.y * dt;
 
-    const collider = getCollider(nx, ny, x, y, nVelocity);
+    const collider = engine.getCollider(nx, ny, x, y, nVelocity);
     if (collider) {
       nVelocity = collider.velocity;
 
@@ -69,7 +67,7 @@ function draw(ctx) {
 
   for (let item of list) {
     const { x, y } = item;
-    shape.drawCircle(ctx, Math.round(x), Math.round(y), 1);
+    engine.drawCircle(ctx, Math.round(x), Math.round(y), 1);
   }
 }
 
