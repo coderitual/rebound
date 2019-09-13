@@ -37,8 +37,8 @@ const fields = {
 
 const initialState = {
   player: [
-    { cash: 200, health: 100, fields: 0 },
-    { cash: 200, health: 100, fields: 0 },
+    { cash: 100, health: 100, fields: 0 },
+    { cash: 100, health: 100, fields: 0 },
   ],
   winner: 0,
   gameover: false,
