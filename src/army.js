@@ -101,12 +101,15 @@ function draw(ctx) {
         const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * rd) + army.x;
         const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * rd) + army.y;
 
+        const odd = (i % 2);
+        const sign = odd ? 1 : -1;
+
         if (i < alive) {
           engine.draw(
             ctx,
             spriteForPlayer(army.playerId, army.type),
-            x - 2 + army.offsetX,
-            y - 2 + army.offsetY * ((i % 2) + 1)
+            x - 2 + army.offsetX * sign,
+            y - 2 + army.offsetY * ((i % 2) + 1) * sign
           );
         } else {
           engine.draw(ctx, 'blood', x - 2, y - 2);

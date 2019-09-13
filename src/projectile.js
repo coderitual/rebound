@@ -62,8 +62,7 @@ function update(dt) {
 }
 
 function draw(ctx) {
-  ctx.fillStyle = '#ff0000';
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = '#fff';
 
   for (let item of list) {
     const { x, y } = item;
