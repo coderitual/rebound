@@ -22,6 +22,8 @@ const initialState = {
     { cash: 100, health: 100, fields: 0 },
     { cash: 100, health: 100, fields: 0 },
   ],
+  winner: 0,
+  gameover: false,
 };
 
 store.onProjectileDied = ({ x, y, playerId }) => {
@@ -55,16 +57,23 @@ store.onBaseAttack = (a, b) => {
     }
 
     if (store.state.player[b.playerId].health <= 0) {
+      army.all.delete(a);
       store.state.player[b.playerId].health = 0;
       store.onGameOver(a.playerId);
     }
   }
 };
 
+store.onGameOver = winner => {
+  store.state.winner = winner;
+  store.state.gameover = true;
+  cd.set('gameover', 3);
+};
+
 // Lifecycyle
 
 function load() {
-  store.state = { ...initialState };
+  store.state = JSON.parse(JSON.stringify(initialState));
   cd.set('intro', 2);
 
   input.init();
@@ -135,6 +144,25 @@ function render(ctx) {
       'black'
     );
   }
+
+  if (store.state.gameover) {
+    if (cd.has('gameover')) {
+      const text = `${store.state.winner === 0 ? 'red' : 'blue'} won!`;
+      font.printOutline(
+        ctx,
+        text,
+        (128 - text.length * 4) / 2,
+        50,
+        'white',
+        'black'
+      );
+    } else {
+      store.state.gameover = false;
+      store.state = JSON.parse(JSON.stringify(initialState));
+      army.all.clear();
+    }
+  }
+
   ui.health(ctx, 104, 1, store.state.player[0].health, true);
   ui.cash(ctx, 110, 120, store.state.player[0].cash, true);
   ui.health(ctx, 1, 1, store.state.player[1].health);
