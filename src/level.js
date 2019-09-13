@@ -256,7 +256,7 @@ function render(ctx) {
       const loser = Array.from(base.all).find(
         b => b.playerId !== store.state.winner
       );
-      fx.explode(loser.x + 5, loser.y + 5, 2, 130);
+      fx.explode(loser.x + 5, loser.y + 5, 1, 100);
 
       if (!cd.hasSet('shake', 999)) {
         $globalConfig.shakeOffset = 0.5;

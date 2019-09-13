@@ -19,10 +19,10 @@ function explode(x, y, r, amount) {
       p.x = x;
       p.y = y;
       p.velx = -1 + Math.random() * 2;
-      p.vely = -1 + Math.random() * 2 - 4;
+      p.vely = -1 + Math.random() * 2 - 10;
       p.mass = 0.5 + Math.random() * 2;
       p.r = 0.5 + Math.random() * r;
-      p.mass = 0.5 + Math.random() * 100;
+      p.mass = 0.5 + Math.random() * 100 + 8;
       p.alive = true;
       selected++;
       if (selected === amount) {
