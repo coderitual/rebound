@@ -48,19 +48,30 @@ store.onHarvest = () => {
   }
 };
 
-store.onBaseAttack = (a, b) => {
-  if (!cd.hasSet('baseattack', 0.5)) {
-    store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
-    a.health -= Math.round(Math.random() * 5);
-    if (a.health <= 0) {
-      army.all.delete(a);
-    }
+store.onArmyFight = (a, b) => {
+  a.health -= Math.round(Math.random() * 3);
+  b.health -= Math.round(Math.random() * 3);
 
-    if (store.state.player[b.playerId].health <= 0) {
-      army.all.delete(a);
-      store.state.player[b.playerId].health = 0;
-      store.onGameOver(a.playerId);
-    }
+  if (a.health <= 0) {
+    army.all.delete(a);
+  }
+
+  if (b.health <= 0) {
+    army.all.delete(b);
+  }
+};
+
+store.onBaseAttack = (a, b) => {
+  store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
+  a.health -= Math.round(Math.random() * 5);
+  if (a.health <= 0) {
+    army.all.delete(a);
+  }
+
+  if (store.state.player[b.playerId].health <= 0) {
+    army.all.delete(a);
+    store.state.player[b.playerId].health = 0;
+    store.onGameOver(a.playerId);
   }
 };
 
@@ -106,17 +117,31 @@ function update(dt) {
     store.onHarvest();
   }
 
-  // check army base collistions
-  army.all.forEach(a => {
-    base.all.forEach(b => {
-      if (
-        a.playerId !== b.playerId &&
-        Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
-      ) {
-        store.onBaseAttack(a, b);
-      }
+  // check army - base collistions
+  if (!cd.hasSet('collisions', 0.5)) {
+    army.all.forEach(a => {
+      base.all.forEach(b => {
+        if (
+          a.playerId !== b.playerId &&
+          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+        ) {
+          store.onBaseAttack(a, b);
+        }
+      });
     });
-  });
+
+    // check army - army collistions
+    army.all.forEach(a => {
+      army.all.forEach(b => {
+        if (
+          a.playerId !== b.playerId &&
+          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+        ) {
+          store.onArmyFight(a, b);
+        }
+      });
+    });
+  }
 
   army.update(dt);
   base.update(dt);
