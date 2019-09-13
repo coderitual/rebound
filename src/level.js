@@ -46,6 +46,21 @@ store.onHarvest = () => {
   }
 };
 
+store.onBaseAttack = (a, b) => {
+  if (!cd.hasSet('baseattack', 0.5)) {
+    store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
+    a.health -= Math.round(Math.random() * 5);
+    if (a.health <= 0) {
+      army.all.delete(a);
+    }
+
+    if (store.state.player[b.playerId].health <= 0) {
+      store.state.player[b.playerId].health = 0;
+      store.onGameOver(a.playerId);
+    }
+  }
+};
+
 // Lifecycyle
 
 function load() {

@@ -5,4 +5,5 @@ export default {
   onProjectileLaunch: playerId => {},
   onHarvest: () => {},
   onBaseAttack: (army, base) => {},
+  onGameOver: winner => {},
 };
