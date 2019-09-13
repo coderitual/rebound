@@ -37,8 +37,8 @@ const fields = {
 
 const initialState = {
   player: [
-    { cash: 100, health: 100, fields: 0 },
-    { cash: 100, health: 100, fields: 0 },
+    { cash: 500, health: 100, fields: 0 },
+    { cash: 500, health: 100, fields: 0 },
   ],
   winner: 0,
   gameover: false,
@@ -67,14 +67,23 @@ store.onHarvest = () => {
 };
 
 store.onArmyFight = (a, b) => {
+  a.state = 'fight';
+  b.state = 'fight';
+
   a.health -= Math.round(Math.random() * 3);
   b.health -= Math.round(Math.random() * 3);
+  a.cid = 0;
+  b.cid = 1;
 
   if (a.health <= 0) {
+    a.state = 'dead';
+    b.state = 'won';
     army.all.delete(a);
   }
 
   if (b.health <= 0) {
+    b.state = 'dead';
+    a.state = 'won';
     army.all.delete(b);
   }
 };
@@ -82,11 +91,18 @@ store.onArmyFight = (a, b) => {
 store.onBaseAttack = (a, b) => {
   store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
   a.health -= Math.round(Math.random() * 5);
+
+  store.state.player[b.playerId].state = 'fight';
+  a.state = 'fight';
+
   if (a.health <= 0) {
+    store.state.player[b.playerId].state = 'won';
+    a.state = 'dead';
     army.all.delete(a);
   }
 
   if (store.state.player[b.playerId].health <= 0) {
+    a.state = 'dead';
     army.all.delete(a);
     store.state.player[b.playerId].health = 0;
     store.onGameOver(a.playerId);
@@ -131,6 +147,16 @@ function load() {
 }
 
 function update(dt) {
+  army.all.forEach(a => {
+    a.type = 'soldier';
+
+    fields.all.forEach(b => {
+      if (Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range) {
+        a.type = 'cow';
+      }
+    });
+  });
+
   // check army - base collisions
   if (!cd.hasSet('collisions', 0.5)) {
     army.all.forEach(a => {

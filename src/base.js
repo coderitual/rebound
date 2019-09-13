@@ -42,6 +42,8 @@ function add({
     angle,
     power,
     targetPower,
+    cid: 0,
+    offsetY: 0,
     range: config.range,
   });
 }
@@ -118,7 +120,17 @@ function updateBase(dt) {
   }
 }
 
+var frame = 0;
+
 function update(dt) {
+  if (frame % 12 === 0) {
+    for (let base of all) {
+      if (store.state.player[base.playerId].state === 'fight') {
+        base.offsetY = (base.offsetY + 1) % 2;
+      }
+    }
+  }
+
   updateBase(dt);
 
   if (engine.isDownOnce('Digit1')) {
@@ -130,22 +142,12 @@ function update(dt) {
   }
 
   projectile.update(dt);
+  frame++;
 }
 
 function drawBase(ctx) {
-  for (let i of all) {
-    if ($globalConfig.isDebugDraw) {
-      engine.drawRect(
-        ctx,
-        i.x,
-        i.y,
-        config.baseWidth,
-        config.baseHeight,
-        DEBUG_COLOR
-      );
-    } else {
-      engine.draw(ctx, config.baseSprite, i.x, i.y);
-    }
+  for (let base of all) {
+    engine.draw(ctx, config.baseSprite, base.x, base.y + base.offsetY);
   }
 }
 
