@@ -210,19 +210,6 @@ function render(ctx) {
   engine.map(ctx);
   base.draw(ctx);
   army.draw(ctx);
-  engine.drawGrid(ctx);
-
-  if ($globalConfig.isDebugDraw) {
-    fields.all.forEach(field => {
-      ctx.save();
-      ctx.globalAlpha = 0.2;
-      ctx.beginPath();
-      ctx.arc(field.x, field.y, field.range, 0, 2 * Math.PI, false);
-      ctx.fillStyle = 'blue';
-      ctx.fill();
-      ctx.restore();
-    });
-  }
 
   if (cd.has('intro')) {
     engine.draw(ctx, 'title', (128 - 56) / 2, 50);
