@@ -40,7 +40,7 @@ const initialState = {
     { cash: 100, health: 100, fields: 0 },
     { cash: 100, health: 100, fields: 0 },
   ],
-  winner: 0,
+  winner: 1,
   gameover: false,
 };
 
@@ -116,7 +116,7 @@ store.onBaseAttack = (a, b) => {
 store.onGameOver = winner => {
   store.state.winner = winner;
   store.state.gameover = true;
-  cd.set('gameover', 3);
+  cd.set('gameover', 4);
 };
 
 // Lifecycyle
@@ -248,13 +248,19 @@ function render(ctx) {
         ctx,
         text,
         (128 - text.length * 4) / 2,
-        50,
-        'white',
+        60,
+        store.state.winner === 0 ? '#FF004D' : '#29ADFF',
         'black'
       );
 
-      fx.explode(64, 64, 5, 100);
-      $globalConfig.shakeOffset = 0.3;
+      const loser = Array.from(base.all).find(
+        b => b.playerId !== store.state.winner
+      );
+      fx.explode(loser.x + 5, loser.y + 5, 2, 130);
+
+      if (!cd.hasSet('shake', 999)) {
+        $globalConfig.shakeOffset = 0.5;
+      }
     } else {
       store.state.gameover = false;
       store.state = JSON.parse(JSON.stringify(initialState));

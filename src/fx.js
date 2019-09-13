@@ -19,10 +19,10 @@ function explode(x, y, r, amount) {
       p.x = x;
       p.y = y;
       p.velx = -1 + Math.random() * 2;
-      p.vely = -1 + Math.random() * 2;
+      p.vely = -1 + Math.random() * 2 - 4;
       p.mass = 0.5 + Math.random() * 2;
       p.r = 0.5 + Math.random() * r;
-      p.mass = 0.5 + Math.random() * 2;
+      p.mass = 0.5 + Math.random() * 100;
       p.alive = true;
       selected++;
       if (selected === amount) {
@@ -46,6 +46,8 @@ function update() {
 }
 
 function draw(ctx) {
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
   ctx.fillStyle = '#FFEC27';
   for (let p of particles) {
     if (p.alive) {
@@ -54,6 +56,7 @@ function draw(ctx) {
       ctx.fill();
     }
   }
+  ctx.restore();
 }
 
 export default { update, draw, explode };
