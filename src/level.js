@@ -8,6 +8,23 @@ import ui from './ui';
 let time = 1;
 const cd = engine.cooldown();
 
+window.$globalConfig = window.$globalConfig || {};
+$globalConfig.shakeOffset = 0;
+
+export function shake(ctx) {
+  let fade = 0.96;
+  let offsetx = 8 - Math.random() * 16;
+  let offsety = 8 - Math.random() * 16;
+  offsetx *= $globalConfig.shakeOffset;
+  offsety *= $globalConfig.shakeOffset;
+
+  engine.camera(ctx, offsetx, offsety);
+  $globalConfig.shakeOffset *= fade;
+  if ($globalConfig.shakeOffset < 0.08) {
+    $globalConfig.shakeOffset = 0;
+  }
+}
+
 // Game logic
 
 const fields = {
@@ -163,9 +180,8 @@ function update(dt) {
 
 function render(ctx) {
   engine.cls(ctx);
-  engine.camera(ctx, 0, 0);
+  shake(ctx);
   engine.map(ctx);
-  engine.camera(ctx);
   base.draw(ctx);
   army.draw(ctx);
   engine.drawGrid(ctx);
