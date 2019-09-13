@@ -1,19 +1,12 @@
-import font from '/lib/font';
-import spritesheet from '/lib/spritesheet';
-import map from '/lib/map';
-import camera from '/lib/camera';
-import cls from '/lib/cls';
-import cooldown from '/lib/cooldown';
+import engine from '/lib/engine';
 import fx from './fx';
-import shape from '/lib/shape';
-import input from '/lib/input';
 import army from './army';
 import base from './base';
 import store from './store';
 import ui from './ui';
 
 let time = 1;
-const cd = cooldown();
+const cd = engine.cooldown();
 
 // Game logic
 
@@ -95,7 +88,7 @@ function load() {
   store.state = JSON.parse(JSON.stringify(initialState));
   cd.set('intro', 2);
 
-  input.init();
+  engine.init();
   army.init();
   base.init();
 
@@ -169,13 +162,13 @@ function update(dt) {
 }
 
 function render(ctx) {
-  cls(ctx);
-  camera(ctx, 0, 0);
-  map(ctx);
-  camera(ctx);
+  engine.cls(ctx);
+  engine.camera(ctx, 0, 0);
+  engine.map(ctx);
+  engine.camera(ctx);
   base.draw(ctx);
   army.draw(ctx);
-  shape.drawGrid(ctx);
+  engine.drawGrid(ctx);
 
   if ($globalConfig.isDebugDraw) {
     fields.all.forEach(field => {
@@ -190,8 +183,8 @@ function render(ctx) {
   }
 
   if (cd.has('intro')) {
-    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-    font.printOutline(
+    engine.draw(ctx, 'title', (128 - 56) / 2, 50);
+    engine.printOutline(
       ctx,
       'compo edition',
       (128 - 'compo edition'.length * 4) / 2,
@@ -204,7 +197,7 @@ function render(ctx) {
   if (store.state.gameover) {
     if (cd.has('gameover')) {
       const text = `${store.state.winner === 0 ? 'red' : 'blue'} won!`;
-      font.printOutline(
+      engine.printOutline(
         ctx,
         text,
         (128 - text.length * 4) / 2,
