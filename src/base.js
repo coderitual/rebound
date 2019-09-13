@@ -54,13 +54,7 @@ function init() {
     config.shootEndWidth,
     config.shootEndWidth
   );
-  engine.define(
-    config.baseSprite,
-    56,
-    8,
-    config.baseWidth,
-    config.baseHeight
-  );
+  engine.define(config.baseSprite, 56, 8, config.baseWidth, config.baseHeight);
 }
 
 function updateBase(dt) {

@@ -131,7 +131,7 @@ function load() {
 }
 
 function update(dt) {
-  // check army - base collistions
+  // check army - base collisions
   if (!cd.hasSet('collisions', 0.5)) {
     army.all.forEach(a => {
       base.all.forEach(b => {
@@ -144,7 +144,7 @@ function update(dt) {
       });
     });
 
-    // check army - army collistions
+    // check army - army collisions
     army.all.forEach(a => {
       army.all.forEach(b => {
         if (
@@ -156,7 +156,7 @@ function update(dt) {
       });
     });
 
-    // calculaye fields usage
+    // calculate fields usage
     store.state.player[0].fields = 0;
     store.state.player[1].fields = 0;
     army.all.forEach(a => {

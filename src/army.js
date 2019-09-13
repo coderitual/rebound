@@ -1,7 +1,4 @@
-import spritesheet from '/lib/engine';
-import shape from '/lib/engine';
-import input from '/lib/engine';
-import math from '/lib/engine';
+import engine from '/lib/engine';
 
 const all = new Set();
 
@@ -24,10 +21,10 @@ function add({ x, y, count, playerId }) {
 }
 
 function init() {
-  spritesheet.define('soldier-red', 0, 24, 4, 5);
-  spritesheet.define('soldier-blue', 8, 24, 4, 5);
-  spritesheet.define('flag-red', 0, 32, 8, 8);
-  spritesheet.define('flag-blue', 8, 32, 8, 8);
+  engine.define('soldier-red', 0, 24, 4, 5);
+  engine.define('soldier-blue', 8, 24, 4, 5);
+  engine.define('flag-red', 0, 32, 8, 8);
+  engine.define('flag-blue', 8, 32, 8, 8);
 }
 
 function spriteForPlayer(id, sprite) {
@@ -59,12 +56,7 @@ function draw(ctx) {
       const x = Math.round(Math.cos(((Math.PI * 2) / 3) * i) * 3) + army.x;
       const y = Math.round(Math.sin(((Math.PI * 2) / 3) * i) * 3) + army.y;
 
-      spritesheet.draw(
-        ctx,
-        spriteForPlayer(army.playerId, 'soldier'),
-        x - 2,
-        y - 2
-      );
+      engine.draw(ctx, spriteForPlayer(army.playerId, 'soldier'), x - 2, y - 2);
     }
   }
 }
