@@ -42,7 +42,6 @@ var frame = 0;
 
 function update(dt) {
   if (frame % 128 === 0) {
-    console.log('update 24');
     for (let army of all) {
       if (army.offsetX === 0) {
         army.offsetX = -1;
