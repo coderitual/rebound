@@ -2,8 +2,6 @@ import engine from '/lib/engine';
 import projectile from './projectile';
 import store from './store';
 
-const DEBUG_COLOR = '#FF0000';
-
 const all = new Set();
 
 let config = {
@@ -18,7 +16,7 @@ let config = {
   maxShootWidth: 10,
 
   // Shooting behaviour
-  angleSpeed: 3.5,
+  angleSpeed: 3,
   powerSpeed: 0.025,
   defaultPower: 0,
   maxLength: 25,

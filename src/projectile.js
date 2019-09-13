@@ -62,11 +62,14 @@ function update(dt) {
 }
 
 function draw(ctx) {
-  ctx.fillStyle = '#fff';
-
   for (let item of list) {
-    const { x, y } = item;
-    engine.drawCircle(ctx, Math.round(x), Math.round(y), 1);
+    const { x, y, velocity } = item;
+    ctx.fillStyle = '#2f6528';
+    engine.drawCircle(ctx, Math.round(x) - 1, Math.round(y) - 1, 1);
+    ctx.fillStyle = '#fff';
+
+    console.log();
+    engine.drawCircle(ctx, Math.round(x) - 1, Math.round(y) - 1 * engine.vecLength(velocity) / 15, 1);
   }
 }
 
