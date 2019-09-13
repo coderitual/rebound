@@ -14,11 +14,21 @@ const cd = cooldown();
 
 // Game logic
 
+const fields = {
+  all: [
+    { x: 48, y: 24, range: 8 },
+    { x: 100, y: 12, range: 12 },
+    { x: 60, y: 116, range: 12 },
+  ],
+};
+
 const initialState = {
   player: [
     { cash: 100, health: 100, fields: 0 },
     { cash: 100, health: 100, fields: 0 },
   ],
+  winner: 0,
+  gameover: false,
 };
 
 store.onProjectileDied = ({ x, y, playerId }) => {
@@ -43,25 +53,43 @@ store.onHarvest = () => {
   }
 };
 
-store.onBaseAttack = (a, b) => {
-  if (!cd.hasSet('baseattack', 0.5)) {
-    store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
-    a.health -= Math.round(Math.random() * 5);
-    if (a.health <= 0) {
-      army.all.delete(a);
-    }
+store.onArmyFight = (a, b) => {
+  a.health -= Math.round(Math.random() * 3);
+  b.health -= Math.round(Math.random() * 3);
 
-    if (store.state.player[b.playerId].health <= 0) {
-      store.state.player[b.playerId].health = 0;
-      store.onGameOver(a.playerId);
-    }
+  if (a.health <= 0) {
+    army.all.delete(a);
   }
+
+  if (b.health <= 0) {
+    army.all.delete(b);
+  }
+};
+
+store.onBaseAttack = (a, b) => {
+  store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
+  a.health -= Math.round(Math.random() * 5);
+  if (a.health <= 0) {
+    army.all.delete(a);
+  }
+
+  if (store.state.player[b.playerId].health <= 0) {
+    army.all.delete(a);
+    store.state.player[b.playerId].health = 0;
+    store.onGameOver(a.playerId);
+  }
+};
+
+store.onGameOver = winner => {
+  store.state.winner = winner;
+  store.state.gameover = true;
+  cd.set('gameover', 3);
 };
 
 // Lifecycyle
 
 function load() {
-  store.state = { ...initialState };
+  store.state = JSON.parse(JSON.stringify(initialState));
   cd.set('intro', 2);
 
   engine.init();
@@ -90,21 +118,46 @@ function load() {
 }
 
 function update(dt) {
+  // check army - base collistions
+  if (!cd.hasSet('collisions', 0.5)) {
+    army.all.forEach(a => {
+      base.all.forEach(b => {
+        if (
+          a.playerId !== b.playerId &&
+          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+        ) {
+          store.onBaseAttack(a, b);
+        }
+      });
+    });
+
+    // check army - army collistions
+    army.all.forEach(a => {
+      army.all.forEach(b => {
+        if (
+          a.playerId !== b.playerId &&
+          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+        ) {
+          store.onArmyFight(a, b);
+        }
+      });
+    });
+
+    // calculaye fields usage
+    store.state.player[0].fields = 0;
+    store.state.player[1].fields = 0;
+    army.all.forEach(a => {
+      fields.all.forEach(b => {
+        if (Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range) {
+          store.state.player[a.playerId].fields++;
+        }
+      });
+    });
+  }
+
   if (!cd.hasSet('harvest', 0.5)) {
     store.onHarvest();
   }
-
-  // check army base collistions
-  army.all.forEach(a => {
-    base.all.forEach(b => {
-      if (
-        a.playerId !== b.playerId &&
-        Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
-      ) {
-        store.onBaseAttack(a, b);
-      }
-    });
-  });
 
   army.update(dt);
   base.update(dt);
@@ -121,6 +174,18 @@ function render(ctx) {
   army.draw(ctx);
   engine.drawGrid(ctx);
 
+  if ($globalConfig.isDebugDraw) {
+    fields.all.forEach(field => {
+      ctx.save();
+      ctx.globalAlpha = 0.2;
+      ctx.beginPath();
+      ctx.arc(field.x, field.y, field.range, 0, 2 * Math.PI, false);
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
   if (cd.has('intro')) {
     engine.draw(ctx, 'title', (128 - 56) / 2, 50);
     engine.printOutline(
@@ -132,6 +197,25 @@ function render(ctx) {
       'black'
     );
   }
+
+  if (store.state.gameover) {
+    if (cd.has('gameover')) {
+      const text = `${store.state.winner === 0 ? 'red' : 'blue'} won!`;
+      font.printOutline(
+        ctx,
+        text,
+        (128 - text.length * 4) / 2,
+        50,
+        'white',
+        'black'
+      );
+    } else {
+      store.state.gameover = false;
+      store.state = JSON.parse(JSON.stringify(initialState));
+      army.all.clear();
+    }
+  }
+
   ui.health(ctx, 104, 1, store.state.player[0].health, true);
   ui.cash(ctx, 110, 120, store.state.player[0].cash, true);
   ui.health(ctx, 1, 1, store.state.player[1].health);
