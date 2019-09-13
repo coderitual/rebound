@@ -1,7 +1,4 @@
-import spritesheet from '/lib/spritesheet';
-import shape from '/lib/shape';
-import input from '/lib/input';
-import * as math from '/lib/math';
+import engine from '/lib/engine';
 import projectile from './projectile';
 import store from './store';
 
@@ -50,14 +47,14 @@ function add({
 }
 
 function init() {
-  spritesheet.define(
+  engine.define(
     config.shootEndSprite,
     56,
     19,
     config.shootEndWidth,
     config.shootEndWidth
   );
-  spritesheet.define(
+  engine.define(
     config.baseSprite,
     56,
     8,
@@ -71,13 +68,13 @@ function updateBase(dt) {
     const inputs = $globalConfig.playerInput[item.playerId];
 
     // Rotate
-    if (input.isDown(inputs.rotateLeft)) {
+    if (engine.isDown(inputs.rotateLeft)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle -= config.angleSpeed;
     }
 
     // Rotate
-    if (input.isDown(inputs.rotateRight)) {
+    if (engine.isDown(inputs.rotateRight)) {
       item.targetAngle = item.targetAngle || 0;
       item.targetAngle += config.angleSpeed;
     } else {
@@ -85,7 +82,7 @@ function updateBase(dt) {
 
     // Set Firing Power!
 
-    if (input.isDown(inputs.powerKey)) {
+    if (engine.isDown(inputs.powerKey)) {
       item.targetPower = item.targetPower || 0;
       item.targetPower = Math.min(item.targetPower + config.powerSpeed, 1);
     } else {
@@ -98,7 +95,7 @@ function updateBase(dt) {
 
     // Fire!
     if (
-      input.isUp(inputs.powerKey) &&
+      engine.isUp(inputs.powerKey) &&
       store.canProjectileLaunch(item.playerId)
     ) {
       store.onProjectileLaunch(item.playerId);
@@ -110,8 +107,8 @@ function updateBase(dt) {
 
       $globalConfig.shakeOffset = 0.07 + item.targetPower * 0.05;
 
-      const radians = math.toRadians(item.angle);
-      const direction = math.vecFromAngle(radians);
+      const radians = engine.toRadians(item.angle);
+      const direction = engine.vecFromAngle(radians);
 
       const projectilePower = item.targetPower * config.maxProjectileVelocity;
 
@@ -130,7 +127,7 @@ function updateBase(dt) {
 function update(dt) {
   updateBase(dt);
 
-  if (input.isDownOnce('Digit1')) {
+  if (engine.isDownOnce('Digit1')) {
     if (!config.defaultPower) {
       config.defaultPower = 1;
     } else {
@@ -144,7 +141,7 @@ function update(dt) {
 function drawBase(ctx) {
   for (let i of all) {
     if ($globalConfig.isDebugDraw) {
-      shape.drawRect(
+      engine.drawRect(
         ctx,
         i.x,
         i.y,
@@ -153,7 +150,7 @@ function drawBase(ctx) {
         DEBUG_COLOR
       );
     } else {
-      spritesheet.draw(ctx, config.baseSprite, i.x, i.y);
+      engine.draw(ctx, config.baseSprite, i.x, i.y);
     }
   }
 }
@@ -163,7 +160,7 @@ function drawLine(ctx, x, y, width, angle, style, length, lineDash) {
   ctx.beginPath();
 
   ctx.translate(x, y + Math.floor(width / 2));
-  ctx.rotate(math.toRadians(angle));
+  ctx.rotate(engine.toRadians(angle));
   ctx.moveTo(0, 0);
   ctx.lineTo(length, 0);
   if (lineDash) {
@@ -184,8 +181,8 @@ function drawShootLine(ctx) {
 
     angle = angle || 0;
     targetAngle = targetAngle || 0;
-    angle = math.lerp(angle, targetAngle, 0.07);
-    power = Math.min(math.lerp(power, targetPower, 0.07), 1);
+    angle = engine.lerp(angle, targetAngle, 0.07);
+    power = Math.min(engine.lerp(power, targetPower, 0.07), 1);
 
     const width = 2;
     const length = config.maxLength * power;

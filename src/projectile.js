@@ -1,5 +1,5 @@
-import shape from '/lib/shape';
-import * as math from '/lib/math';
+import shape from '/lib/engine';
+import math from '/lib/engine';
 import { getCollider } from '/lib/map';
 import store from './store';
 

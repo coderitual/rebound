@@ -1,12 +1,9 @@
-import font from '/lib/font';
-import spritesheet from '/lib/spritesheet';
+import engine from '/lib/engine';
 import map from '/lib/map';
 import camera from '/lib/camera';
 import cls from '/lib/cls';
 import cooldown from '/lib/cooldown';
 import fx from './fx';
-import shape from '/lib/shape';
-import input from '/lib/input';
 import army from './army';
 import base from './base';
 import store from './store';
@@ -67,7 +64,7 @@ function load() {
   store.state = { ...initialState };
   cd.set('intro', 2);
 
-  input.init();
+  engine.init();
   army.init();
   base.init();
 
@@ -122,11 +119,11 @@ function render(ctx) {
   camera(ctx);
   base.draw(ctx);
   army.draw(ctx);
-  shape.drawGrid(ctx);
+  engine.drawGrid(ctx);
 
   if (cd.has('intro')) {
-    spritesheet.draw(ctx, 'title', (128 - 56) / 2, 50);
-    font.printOutline(
+    engine.draw(ctx, 'title', (128 - 56) / 2, 50);
+    engine.printOutline(
       ctx,
       'compo edition',
       (128 - 'compo edition'.length * 4) / 2,

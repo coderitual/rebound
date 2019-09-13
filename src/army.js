@@ -1,7 +1,7 @@
-import spritesheet from '/lib/spritesheet';
-import shape from '/lib/shape';
-import input from '/lib/input';
-import math from '/lib/math';
+import spritesheet from '/lib/engine';
+import shape from '/lib/engine';
+import input from '/lib/engine';
+import math from '/lib/engine';
 
 const all = new Set();
 

@@ -1,7 +1,7 @@
 import process, { start } from '/lib/process';
-import spritesheet from '/lib/spritesheet';
+import spritesheet from '/lib/engine';
 import cls from '/lib/cls';
-import input from '/lib/input';
+import input from '/lib/engine';
 import scene from './scene';
 import level from './level';
 
