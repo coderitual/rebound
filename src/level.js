@@ -163,7 +163,6 @@ function update(dt) {
 
   // check army - base collisions
   if (!cd.hasSet('collisions', 0.5)) {
-
     if (store.state.player[0].state !== 'dead') {
       store.state.player[0].state = 'idle';
     }
@@ -171,7 +170,6 @@ function update(dt) {
     if (store.state.player[1].state !== 'dead') {
       store.state.player[1].state = 'idle';
     }
-
 
     // check army - army collisions
     army.all.forEach(a => {
@@ -189,12 +187,11 @@ function update(dt) {
       });
     });
 
-
     army.all.forEach(a => {
       base.all.forEach(b => {
         if (
           a.playerId !== b.playerId &&
-          Math.hypot(a.x - b.x, a.y - b.y) < a.range + b.range
+          Math.hypot(a.x - (b.x + 5), a.y - (b.y + 5)) < a.range + b.range
         ) {
           store.onBaseAttack(a, b);
         }
@@ -242,6 +239,8 @@ function render(ctx) {
     );
   }
 
+  fx.draw(ctx);
+
   if (store.state.gameover) {
     if (cd.has('gameover')) {
       const text = `${store.state.winner === 0 ? 'red' : 'blue'} won!`;
@@ -253,6 +252,9 @@ function render(ctx) {
         'white',
         'black'
       );
+
+      fx.explode(64, 64, 5, 100);
+      $globalConfig.shakeOffset = 0.3;
     } else {
       store.state.gameover = false;
       store.state = JSON.parse(JSON.stringify(initialState));

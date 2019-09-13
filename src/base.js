@@ -5,7 +5,7 @@ import store from './store';
 const all = new Set();
 
 let config = {
-  range: 20,
+  range: 10,
   // Rendering
   baseSprite: 'base',
   shootEndSprite: 'shoot-end',
