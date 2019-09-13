@@ -67,7 +67,7 @@ store.onHarvest = () => {
 };
 
 store.onArmyFight = (a, b) => {
-  if (a.state === 'dead' && b.state === 'dead') {
+  if (a.state === 'dead' || b.state === 'dead') {
     return;
   }
 
@@ -81,19 +81,17 @@ store.onArmyFight = (a, b) => {
 
   if (a.health <= 0) {
     a.state = 'dead';
-    b.state = 'won';
     // army.all.delete(a);
   }
 
   if (b.health <= 0) {
     b.state = 'dead';
-    a.state = 'won';
     // army.all.delete(b);
   }
 };
 
 store.onBaseAttack = (a, b) => {
-  if (a.state === 'dead') {
+  if (a.state === 'dead' || store.state.player[b.playerId].state === 'dead') {
     return;
   }
   store.state.player[b.playerId].health -= Math.round(Math.random() * 3);
@@ -103,13 +101,12 @@ store.onBaseAttack = (a, b) => {
   a.state = 'fight';
 
   if (a.health <= 0) {
-    store.state.player[b.playerId].state = 'won';
     a.state = 'dead';
     // army.all.delete(a);
   }
 
   if (store.state.player[b.playerId].health <= 0) {
-    a.state = 'dead';
+    store.state.player[b.playerId].state = 'dead';
     // army.all.delete(a);
     store.state.player[b.playerId].health = 0;
     store.onGameOver(a.playerId);
