@@ -35,17 +35,17 @@ export function init() {
   engine.start();
 }
 
-function update(dt) {
-  scene.update(dt);
+function update(dt, time) {
+  scene.update(dt, time);
 
   if (input.isDownOnce('Backquote')) {
     $globalConfig.isDebugDraw = !$globalConfig.isDebugDraw;
   }
 }
 
-function render() {
+function render(acm, dt, time) {
   engine.cls(ctx);
-  scene.render(ctx);
+  scene.render(ctx, dt, time);
 
   // Required to handle properly keyUpOnce
   input.clear();

@@ -8,7 +8,7 @@ function add({
   y,
   velocity = { x: 0, y: 0 },
   drag = 0.985,
-  idleVelocityMagnitude = 3.5,
+  idleVelocityMagnitude = 5.5,
   playerId = 0,
 }) {
   const item = {
@@ -64,12 +64,9 @@ function update(dt) {
 function draw(ctx) {
   for (let item of list) {
     const { x, y, velocity } = item;
-    ctx.fillStyle = '#2f6528';
-    engine.drawCircle(ctx, Math.round(x) - 1, Math.round(y) - 1, 1);
-    ctx.fillStyle = '#fff';
-
+    engine.drawRect(ctx, Math.round(x) - 1, Math.round(y) - 1, 2, 2, '#2f6528');
     console.log();
-    engine.drawCircle(ctx, Math.round(x) - 1, Math.round(y) - 1 * engine.vecLength(velocity) / 15, 1);
+    engine.drawRect(ctx, Math.round(x) - 1, Math.round(y) - 1 * engine.vecLength(velocity) / 15, 2, 2, '#fff');
   }
 }
 

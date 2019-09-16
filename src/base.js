@@ -16,11 +16,11 @@ let config = {
   maxShootWidth: 10,
 
   // Shooting behaviour
-  angleSpeed: 3,
+  angleSpeed: 1.75,
   powerSpeed: 0.025,
   defaultPower: 0,
   maxLength: 25,
-  maxProjectileVelocity: 150,
+  maxProjectileVelocity: 120,
 };
 
 function add({

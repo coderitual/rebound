@@ -5,7 +5,6 @@ import base from './base';
 import store from './store';
 import ui from './ui';
 
-let time = 1;
 const cd = engine.cooldown();
 
 window.$globalConfig = window.$globalConfig || {};
@@ -150,7 +149,7 @@ function load() {
   });
 }
 
-function update(dt) {
+function update(dt, time) {
   army.all.forEach(a => {
     a.type = 'soldier';
 
@@ -215,16 +214,15 @@ function update(dt) {
   }
 
   army.update(dt);
-  base.update(dt);
+  base.update(dt, time);
   fx.update();
-  time += dt;
 }
 
-function render(ctx) {
+function render(ctx, dt, time) {
   engine.cls(ctx);
   shake(ctx);
   engine.map(ctx);
-  base.draw(ctx);
+  base.draw(ctx, dt, time);
   army.draw(ctx);
 
   if (cd.has('intro')) {
