@@ -16,7 +16,7 @@ let config = {
   maxShootWidth: 10,
 
   // Shooting behaviour
-  angleSpeed: 1.75,
+  angleSpeed: 1.0,
   powerSpeed: 0.025,
   defaultPower: 0,
   maxLength: 25,

@@ -8,7 +8,7 @@ function add({
   y,
   velocity = { x: 0, y: 0 },
   drag = 0.985,
-  idleVelocityMagnitude = 5.5,
+  idleVelocityMagnitude = 5.9,
   playerId = 0,
 }) {
   const item = {
