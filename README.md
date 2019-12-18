@@ -1,9 +1,13 @@
 # REBOUND
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
+<p align="center">
+  <img src ="assets/game.png"/>
+</p>
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c52bc956-6ab2-4fa3-bb41-4fe16d197fad/deploy-status)](https://app.netlify.com/sites/bouncebackgame/deploys)
 
-My entry for the 2019 [js13k](https://js13kgames.com/) competition.
+Game entry for the 2019 [js13k](https://js13kgames.com/) competition.
 
 Play here: [rebound](https://reboundgame.netlify.com/)
 
